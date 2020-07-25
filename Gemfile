@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "minimal-mistakes-jekyll"
-gem "github-pages", group: :jekyll_plugins
+# gem "github-pages", group: :jekyll_plugins
 
 # locally preview for remote theme
 # gem "jekyll-remote-theme"
