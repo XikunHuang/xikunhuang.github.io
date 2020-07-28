@@ -10,8 +10,8 @@
 # Review documentation to determine if you should use `theme` or `remote_theme`
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
-# theme                  : "minimal-mistakes-jekyll"
-remote_theme           : "mmistakes/minimal-mistakes"
+theme                  : "minimal-mistakes-jekyll"
+# remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
@@ -171,7 +171,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 
 # Conversion
-markdown: kramdown # CommonMarkGhPages, kramdown
+markdown: Pandoc # CommonMarkGhPages, kramdown
 highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
@@ -179,6 +179,12 @@ incremental: false
 
 
 # Markdown Processing
+pandoc:
+  extensions:
+    - mathjax
+    - from=markdown
+    - to=html
+
 kramdown:
   input: GFM
   hard_wrap: false
@@ -213,6 +219,7 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-pandoc
 
 # mimic GitHub Pages with --safe
 whitelist:
