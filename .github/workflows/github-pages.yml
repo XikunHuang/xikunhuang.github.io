@@ -7,9 +7,13 @@ on:
 
 jobs:
   github-pages:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-pandoc@v1
+        with:
+          pandoc-version: '2.7.3' # The pandoc version to download (if necessary) and use.
+      - run: echo "# Test" | pandoc -t html
       - uses: helaili/jekyll-action@2.0.1
         env:
           JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
