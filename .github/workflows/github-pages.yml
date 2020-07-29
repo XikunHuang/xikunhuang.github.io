@@ -1,29 +1,31 @@
-name: Build and deploy Jekyll site to GitHub Pages
+name: Build and deploy jekyll site
 
 on:
   push:
     branches:
-      - master
-
-jobs:
-  github-pages:
+      # - master
+      - gh-pages
+      # It is highly recommended that you only run this action on push to a 
+        # specific branch, eg. master or source (if on *.github.io repo)
     
-    runs-on: ubuntu-18.04
+jobs:
+  jekyll:
+    runs-on: ubuntu-18.04 # can change this to ubuntu-latest if you prefer
     steps:
       - name: 📂 setup
         uses: actions/checkout@v2
-
         # include the lines below if you are using jekyll-last-modified-at
         # or if you would otherwise need to fetch the full commit history
         # however this may be very slow for large repositories!
         # with:
-        # fetch-depth: '0'
+          # fetch-depth: '0'
+
       - name: setup pandoc
         uses: r-lib/actions/setup-pandoc@v1
         with:
           pandoc-version: '2.7.3' # The pandoc version to download (if necessary) and use.
       - run: echo "# Test" | pandoc -t html
-     
+
       - name: 💎 setup ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -64,7 +66,7 @@ jobs:
           ### In cases where you want to specify the cache key, enable the above 2 inputs
           ### Follows the format here https://github.com/actions/cache
           #
-          # custom_opts: '--drafts --future'
+          # custom_opts: '--drafts --lsi'
           ### If you need to specify any Jekyll build options, enable the above input
           ### Flags accepted can be found here https://jekyllrb.com/docs/configuration/options/#build-command-options
 
