@@ -19,4 +19,5 @@ group :jekyll_plugins do
   gem "jekyll-remote-theme"
   gem 'jekyll-commonmark-ghpages'
   gem "jekyll-pandoc"
+  gem "jekyll-archives"
 end
