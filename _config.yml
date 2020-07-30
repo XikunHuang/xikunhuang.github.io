@@ -17,7 +17,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 # Site Settings
 locale                   : "zh-CN" # "zh-CN" for Chinese
 title                    : "Xikun"
-title_separator          : "-"
+title_separator          : "|"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Xikun Huang"
 description              : "A personal website."
@@ -63,8 +63,8 @@ google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
 # SEO Related
-google_site_verification :
-bing_site_verification   :
+google_site_verification : "3cHjtRtxjFNDcyWaXaOeICJD6X3bs6TFi1lkf9Zwmt8"
+bing_site_verification   : "24CDABDB76E94CB76BF9822CC2D90C1A"
 yandex_site_verification :
 naver_site_verification  :
 
