@@ -175,7 +175,7 @@
   
     <div class="author__avatar">
       
-        <img src="/assets/images/bio-photo.jpg" alt="  黄锡昆" itemprop="image">
+        <img src="/assets/images/xk.png" alt="  黄锡昆" itemprop="image">
       
     </div>
   
@@ -337,7 +337,23 @@
     <p class="archive__item-excerpt" itemprop="description">
 简介
 
-</p>
+
+本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.
+
+
+基础
+
+
+(D)维MVN的pdf为
+
+
+[(x|,) = ]
+
+
+上述pdf式中指数里的表达式去掉(-)后实际上就是(x)和()之间的Mahalanobis距离, 关于这个距离更多的知识可以参考Wikipedia.
+
+
+现在考虑这样一...</p>
   </article>
 </div>
 
@@ -359,7 +375,18 @@
     <p class="archive__item-excerpt" itemprop="description">
 简介
 
-</p>
+
+先来说一下生成式模型(generative models) 和 判别式模型(discriminative models).
+
+
+对于分类问题, 我们的目标是基于有限的训练样本集尽可能准确地估计出后验概率(p(cx)), 而估计该后验概率有两种方式:
+
+
+
+判别式模型: 直接建模(p(c x)).
+
+
+...</p>
   </article>
 </div>
 
@@ -381,7 +408,19 @@
     <p class="archive__item-excerpt" itemprop="description">
 简介
 
-</p>
+
+概率两大派:
+
+
+
+频率学派(frequentist)
+
+
+贝叶斯学派(Bayesian)
+
+
+
+频率学派将概率解释为事件在多次实验下发生的频率(long run frequencies of events). 贝叶斯学派用概率来量化我们对一些事情的不确定性, 因此概率本质上与信息有关, 而与实验次数...</p>
   </article>
 </div>
 
@@ -423,7 +462,8 @@
         <!-- start custom footer snippets -->
 
 <!-- end custom footer snippets -->
-        <div class="page__footer-follow">
+        <!-- 注释掉页脚的关注
+<div class="page__footer-follow">
   <ul class="social-icons">
     
       <li><strong>关注:</strong></li>
@@ -448,6 +488,8 @@
     <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
+-->
+<a href="/sitemap.xml"><i class="fas fa-fw fa-sitemap" aria-hidden="true"></i> Sitemap </a>
 
 <div class="page__footer-copyright">&copy; 2020 Xikun Huang. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
@@ -483,6 +525,25 @@
 
 
 
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://xikunhuang.github.io/categories/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = ""; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xikunhuang.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
 
 
 

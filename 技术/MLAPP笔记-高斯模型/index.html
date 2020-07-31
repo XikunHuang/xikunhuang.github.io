@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>MLAPP笔记-高斯模型 | Xikun</title>
-<meta name="description" content="简介">
+<meta name="description" content="简介   本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.   基础   (D)维MVN的pdf为   [(x|,) = ]   上述pdf式中指数里的表达式去掉(-)后实际上就是(x)和()之间的Mahalanobis距离, 关于这个距离更多的知识可以参考Wikipedia.   现在考虑这样一个问题: MVN的pdf的等值线是什么样的呢?    如果协方差矩阵()是对角阵, 那么Mahalanobis距离就变成了    [(x-)T{-1}(x-) = _{i=1}{D}(x_i-i)^2 = {i=1}{D} y_i^2]   其中(_i)是协方差矩阵的对角元素, (y_i = x_i-_i) 在二维情形下这个等值线就是椭圆. (y_1^2 +  y_2^2 = k)    如果协方差不是对角阵, 那么由于它是实对称矩阵, 因此可以正交分解为 (= UU^T) 此时(y_i = u_i^T(x-))    由此也可以看出Mahalanobis距离与欧氏距离的联系.   MLE for an MVN   最大似然估计是估计MVN的参数的方法之一. 但是最大似然估计有过拟合的缺点,后续会讨论MVN参数的Bayes推断, 这种方法可以消除过拟合, 并且可以为估计提供置信度.   定理: 如果(N)个(iid)样本[i(,)], 那么MVN参数的最大似然估计为 [{mle} = _{i=1}^{N}_i = {}] [{mle} = {i=1}{N}(-{})(-{})T]   多元高斯的一个有趣性质   对于给定数据, 我们从数据中可能仅仅能可靠地估计出均值与方差. 这个时候我们需要一个分布能够具有估计出的均值与方差, 同时又尽量做出最少的假设, 多元高斯就是我们需要的分布. 对于给定的均值与方差,多元高斯分布是熵最大的分布   高斯判别分析   多元高斯的一个重要应用是在生成式模型中定义类条件分布, 即 [p(|y=c,)=(|_c,_c)] 这个被成为高斯判别分析.(实际上是生成模型, 名字容易引起误导). 如果(_c)是对角矩阵, 那么就相当于属性条件独立了, 即等价于朴素贝叶斯. 对于新来的数据, 我们根据下式来进行分类 [() = _c[p(y=c|) + p(|y=c,)] ] 其中在计算第二项时, 我们实际上是在计算()与每个类的中心的距离, 只不过是Mahalanobis距离, 这个可以被看成是 nearest centroids classifier.   Quadratic discriminant analysis(QDA)   高斯判别分析分类准则展开之后分类边界是关于()的二次函数, 这个被称为QDA.   Linear discriminant analysis(LDA)   但是如果假定不同类的协方差矩阵相同, 那么这时候分类边界变成了()的线性函数, 这个被称为LDA.   MLE for discriminant analysis   可以利用最大似然估计方法来估计高斯判别分析准则中的参数. [_c = ] [c = {i:y_i=c}i] [ = {i:y_i=c}(_i-_c)(_i-_c)^T]   防止过拟合的方法   MLE虽然简单快速, 但是有过拟合的缺点. 比如当(N_c&lt;D)时, MLE估计出的协方差矩阵是奇异矩阵, 如果真实协方差矩阵是满秩的, 那么就过拟合了. 对此有一些方法来防止过拟合:    假设每个类的协方差矩阵是对角阵, 即假设属性之间条件独立, 这等价于朴素贝叶斯.   假设所有类的协方差矩阵相同, 这等价于LDA.   假设协方差矩阵是对角阵, 且所有类协方差矩阵相同.   使用一般的协方差矩阵, 但是引入先验.   使用MAP估计   将数据映射到低维空间, 然后在低维空间上使用判别分析.    Inference in jointly Gaussian distributions   本小节讨论给定联合分布(p(_1,_2)), 边际分布(p(_1))和条件分布 (p(_1_2)) 是怎样的呢? 如果联合分布是多元高斯分布, 那么边际分布和条件分布仍然是高斯分布. 有如下结论:">
 
 
   <meta name="author" content="  黄锡昆">
@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://xikunhuang.github.io/%E6%8A%80%E6%9C%AF/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/">
 
 
-  <meta property="og:description" content="简介">
+  <meta property="og:description" content="简介   本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.   基础   (D)维MVN的pdf为   [(x|,) = ]   上述pdf式中指数里的表达式去掉(-)后实际上就是(x)和()之间的Mahalanobis距离, 关于这个距离更多的知识可以参考Wikipedia.   现在考虑这样一个问题: MVN的pdf的等值线是什么样的呢?    如果协方差矩阵()是对角阵, 那么Mahalanobis距离就变成了    [(x-)T{-1}(x-) = _{i=1}{D}(x_i-i)^2 = {i=1}{D} y_i^2]   其中(_i)是协方差矩阵的对角元素, (y_i = x_i-_i) 在二维情形下这个等值线就是椭圆. (y_1^2 +  y_2^2 = k)    如果协方差不是对角阵, 那么由于它是实对称矩阵, 因此可以正交分解为 (= UU^T) 此时(y_i = u_i^T(x-))    由此也可以看出Mahalanobis距离与欧氏距离的联系.   MLE for an MVN   最大似然估计是估计MVN的参数的方法之一. 但是最大似然估计有过拟合的缺点,后续会讨论MVN参数的Bayes推断, 这种方法可以消除过拟合, 并且可以为估计提供置信度.   定理: 如果(N)个(iid)样本[i(,)], 那么MVN参数的最大似然估计为 [{mle} = _{i=1}^{N}_i = {}] [{mle} = {i=1}{N}(-{})(-{})T]   多元高斯的一个有趣性质   对于给定数据, 我们从数据中可能仅仅能可靠地估计出均值与方差. 这个时候我们需要一个分布能够具有估计出的均值与方差, 同时又尽量做出最少的假设, 多元高斯就是我们需要的分布. 对于给定的均值与方差,多元高斯分布是熵最大的分布   高斯判别分析   多元高斯的一个重要应用是在生成式模型中定义类条件分布, 即 [p(|y=c,)=(|_c,_c)] 这个被成为高斯判别分析.(实际上是生成模型, 名字容易引起误导). 如果(_c)是对角矩阵, 那么就相当于属性条件独立了, 即等价于朴素贝叶斯. 对于新来的数据, 我们根据下式来进行分类 [() = _c[p(y=c|) + p(|y=c,)] ] 其中在计算第二项时, 我们实际上是在计算()与每个类的中心的距离, 只不过是Mahalanobis距离, 这个可以被看成是 nearest centroids classifier.   Quadratic discriminant analysis(QDA)   高斯判别分析分类准则展开之后分类边界是关于()的二次函数, 这个被称为QDA.   Linear discriminant analysis(LDA)   但是如果假定不同类的协方差矩阵相同, 那么这时候分类边界变成了()的线性函数, 这个被称为LDA.   MLE for discriminant analysis   可以利用最大似然估计方法来估计高斯判别分析准则中的参数. [_c = ] [c = {i:y_i=c}i] [ = {i:y_i=c}(_i-_c)(_i-_c)^T]   防止过拟合的方法   MLE虽然简单快速, 但是有过拟合的缺点. 比如当(N_c&lt;D)时, MLE估计出的协方差矩阵是奇异矩阵, 如果真实协方差矩阵是满秩的, 那么就过拟合了. 对此有一些方法来防止过拟合:    假设每个类的协方差矩阵是对角阵, 即假设属性之间条件独立, 这等价于朴素贝叶斯.   假设所有类的协方差矩阵相同, 这等价于LDA.   假设协方差矩阵是对角阵, 且所有类协方差矩阵相同.   使用一般的协方差矩阵, 但是引入先验.   使用MAP估计   将数据映射到低维空间, 然后在低维空间上使用判别分析.    Inference in jointly Gaussian distributions   本小节讨论给定联合分布(p(_1,_2)), 边际分布(p(_1))和条件分布 (p(_1_2)) 是怎样的呢? 如果联合分布是多元高斯分布, 那么边际分布和条件分布仍然是高斯分布. 有如下结论:">
 
 
 
@@ -172,7 +172,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="MLAPP笔记-高斯模型">
-    <meta itemprop="description" content="简介">
+    <meta itemprop="description" content="简介本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.基础(D)维MVN的pdf为[(x|,) = ]上述pdf式中指数里的表达式去掉(-)后实际上就是(x)和()之间的Mahalanobis距离, 关于这个距离更多的知识可以参考Wikipedia.现在考虑这样一个问题: MVN的pdf的等值线是什么样的呢?如果协方差矩阵()是对角阵, 那么Mahalanobis距离就变成了[(x-)T{-1}(x-) = _{i=1}{D}(x_i-i)^2 = {i=1}{D} y_i^2]其中(_i)是协方差矩阵的对角元素, (y_i = x_i-_i) 在二维情形下这个等值线就是椭圆. (y_1^2 +  y_2^2 = k)如果协方差不是对角阵, 那么由于它是实对称矩阵, 因此可以正交分解为 (= UU^T) 此时(y_i = u_i^T(x-))由此也可以看出Mahalanobis距离与欧氏距离的联系.MLE for an MVN最大似然估计是估计MVN的参数的方法之一. 但是最大似然估计有过拟合的缺点,后续会讨论MVN参数的Bayes推断, 这种方法可以消除过拟合, 并且可以为估计提供置信度.定理: 如果(N)个(iid)样本[i(,)], 那么MVN参数的最大似然估计为 [{mle} = _{i=1}^{N}_i = {}] [{mle} = {i=1}{N}(-{})(-{})T]多元高斯的一个有趣性质对于给定数据, 我们从数据中可能仅仅能可靠地估计出均值与方差. 这个时候我们需要一个分布能够具有估计出的均值与方差, 同时又尽量做出最少的假设, 多元高斯就是我们需要的分布. 对于给定的均值与方差,多元高斯分布是熵最大的分布高斯判别分析多元高斯的一个重要应用是在生成式模型中定义类条件分布, 即 [p(|y=c,)=(|_c,_c)] 这个被成为高斯判别分析.(实际上是生成模型, 名字容易引起误导). 如果(_c)是对角矩阵, 那么就相当于属性条件独立了, 即等价于朴素贝叶斯. 对于新来的数据, 我们根据下式来进行分类 [() = _c[p(y=c|) + p(|y=c,)] ] 其中在计算第二项时, 我们实际上是在计算()与每个类的中心的距离, 只不过是Mahalanobis距离, 这个可以被看成是 nearest centroids classifier.Quadratic discriminant analysis(QDA)高斯判别分析分类准则展开之后分类边界是关于()的二次函数, 这个被称为QDA.Linear discriminant analysis(LDA)但是如果假定不同类的协方差矩阵相同, 那么这时候分类边界变成了()的线性函数, 这个被称为LDA.MLE for discriminant analysis可以利用最大似然估计方法来估计高斯判别分析准则中的参数. [_c = ] [c = {i:y_i=c}i] [ = {i:y_i=c}(_i-_c)(_i-_c)^T]防止过拟合的方法MLE虽然简单快速, 但是有过拟合的缺点. 比如当(N_c&lt;D)时, MLE估计出的协方差矩阵是奇异矩阵, 如果真实协方差矩阵是满秩的, 那么就过拟合了. 对此有一些方法来防止过拟合:假设每个类的协方差矩阵是对角阵, 即假设属性之间条件独立, 这等价于朴素贝叶斯.假设所有类的协方差矩阵相同, 这等价于LDA.假设协方差矩阵是对角阵, 且所有类协方差矩阵相同.使用一般的协方差矩阵, 但是引入先验.使用MAP估计将数据映射到低维空间, 然后在低维空间上使用判别分析.Inference in jointly Gaussian distributions本小节讨论给定联合分布(p(_1,_2)), 边际分布(p(_1))和条件分布 (p(_1_2)) 是怎样的呢? 如果联合分布是多元高斯分布, 那么边际分布和条件分布仍然是高斯分布. 有如下结论:">
     <meta itemprop="datePublished" content="2019-01-05T00:00:00+00:00">
     
 
@@ -413,7 +413,18 @@
     <p class="archive__item-excerpt" itemprop="description">
 简介
 
-</p>
+
+先来说一下生成式模型(generative models) 和 判别式模型(discriminative models).
+
+
+对于分类问题, 我们的目标是基于有限的训练样本集尽可能准确地估计出后验概率(p(cx)), 而估计该后验概率有两种方式:
+
+
+
+判别式模型: 直接建模(p(c x)).
+
+
+...</p>
   </article>
 </div>
 
@@ -435,7 +446,19 @@
     <p class="archive__item-excerpt" itemprop="description">
 简介
 
-</p>
+
+概率两大派:
+
+
+
+频率学派(frequentist)
+
+
+贝叶斯学派(Bayesian)
+
+
+
+频率学派将概率解释为事件在多次实验下发生的频率(long run frequencies of events). 贝叶斯学派用概率来量化我们对一些事情的不确定性, 因此概率本质上与信息有关, 而与实验次数...</p>
   </article>
 </div>
 
@@ -466,7 +489,8 @@
         <!-- start custom footer snippets -->
 
 <!-- end custom footer snippets -->
-        <div class="page__footer-follow">
+        <!-- 注释掉页脚的关注
+<div class="page__footer-follow">
   <ul class="social-icons">
     
       <li><strong>关注:</strong></li>
@@ -491,6 +515,8 @@
     <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
+-->
+<a href="/sitemap.xml"><i class="fas fa-fw fa-sitemap" aria-hidden="true"></i> Sitemap </a>
 
 <div class="page__footer-copyright">&copy; 2020 Xikun Huang. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
