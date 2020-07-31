@@ -94,7 +94,7 @@ analytics:
 # Site Author
 author:
   name             : "  黄锡昆"
-  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/xk.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "身在数学系的美凌格"
   location         : "Beijing"
   email            :
@@ -174,7 +174,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: Pandoc # CommonMarkGhPages, kramdown
 highlighter: rouge
 lsi: false
-excerpt_separator: "\n\n"
+excerpt_separator: "\n\n\n" # excerpt "\n\n", set in archive-single.html
 incremental: false
 
 
@@ -276,6 +276,18 @@ defaults:
     values:
       layout: single
       author_profile: false
+      read_time: false
+      comments: true
+      share: true
+      related: true
+      toc: true
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
       read_time: false
       comments: true
       share: true
