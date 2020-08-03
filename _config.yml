@@ -174,7 +174,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: Pandoc # CommonMarkGhPages, kramdown
 highlighter: rouge
 lsi: false
-excerpt_separator: "\n\n\n" # excerpt "\n\n", set in archive-single.html
+excerpt_separator: "<!--more-->" # excerpt "\n\n", set in archive-single.html
 incremental: false
 
 
@@ -184,6 +184,8 @@ pandoc:
     - mathjax
     - from=markdown
     - to=html
+    - number-sections
+    - shift-heading-level-by=-1
 
 kramdown:
   input: GFM
@@ -281,6 +283,8 @@ defaults:
       share: true
       related: true
       toc: true
+      toc_sticky: true
+      excerpt: ""
   # _pages
   - scope:
       path: ""
