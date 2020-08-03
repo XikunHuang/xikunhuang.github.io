@@ -23,7 +23,7 @@ jobs:
       - name: setup pandoc
         uses: r-lib/actions/setup-pandoc@v1
         with:
-          pandoc-version: '2.7.3' # The pandoc version to download (if necessary) and use.
+          pandoc-version: '2.10.1' # The pandoc version to download (if necessary) and use.
       - run: echo "# Test" | pandoc -t html
 
       - name: 💎 setup ruby
