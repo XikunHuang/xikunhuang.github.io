@@ -1,0 +1,668 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MLAPP笔记-离散数据生成模型 | Xikun</title>
+<meta name="description" content="A personal website.">
+
+
+  <meta name="author" content="  黄锡昆">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="Xikun">
+<meta property="og:title" content="MLAPP笔记-离散数据生成模型">
+<meta property="og:url" content="https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">
+
+
+  <meta property="og:description" content="A personal website.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2018-11-28T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Xikun Huang",
+      "url": "https://xikunhuang.github.io/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="3cHjtRtxjFNDcyWaXaOeICJD6X3bs6TFi1lkf9Zwmt8" />
+
+
+  <meta name="msvalidate.01" content="24CDABDB76E94CB76BF9822CC2D90C1A">
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xikun Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<!-- link rel="stylesheet" href="/minimal-mistakes/assets/css/pandoc-tango-syntax-highlight.css" --> 
+<link rel="stylesheet" href="/assets/css/pandoc-zenburn-syntax-highlight.css">
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到页脚</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          黄锡昆的个人主页
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/">博客</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">类别</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">关于</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">切换搜索</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MLAPP笔记-离散数据生成模型">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2018-11-28T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MLAPP笔记-离散数据生成模型
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 本文目录</h4></header>
+              
+
+
+
+<ul class="toc__menu">
+<li><a href="#简介">1 简介</a></li>
+<li><a href="#概率分布">2 概率分布</a>
+<ul>
+<li><a href="#伯努利分布和二项分布">2.1 伯努利分布和二项分布</a></li>
+<li><a href="#多伯努利分布和多项分布">2.2 多伯努利分布和多项分布</a></li>
+<li><a href="#贝塔分布和狄利克雷分布">2.3 贝塔分布和狄利克雷分布</a></li>
+</ul></li>
+<li><a href="#贝叶斯概念学习">3 贝叶斯概念学习</a>
+<ul>
+<li><a href="#数字游戏">3.1 数字游戏</a></li>
+<li><a href="#似然">3.2 似然</a></li>
+<li><a href="#先验">3.3 先验</a></li>
+<li><a href="#后验">3.4 后验</a></li>
+<li><a href="#后验预测分布">3.5 后验预测分布</a>
+<ul>
+<li><a href="#bma-vs-plug-in-approximation">3.5.1 BMA vs Plug-in Approximation</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#the-beta-binomial-model">4 The beta-binomial model</a>
+<ul>
+<li><a href="#似然-1">4.1 似然</a></li>
+<li><a href="#先验-1">4.2 先验</a></li>
+<li><a href="#后验-1">4.3 后验</a></li>
+<li><a href="#后验预测分布-1">4.4 后验预测分布</a>
+<ul>
+<li><a href="#过拟合问题">4.4.1 过拟合问题</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#the-dirichlet-multinomial-model">5 The Dirichlet-multinomial model</a>
+<ul>
+<li><a href="#似然-2">5.1 似然</a></li>
+<li><a href="#先验-2">5.2 先验</a></li>
+<li><a href="#后验-2">5.3 后验</a></li>
+<li><a href="#后验预测分布-2">5.4 后验预测分布</a></li>
+</ul></li>
+<li><a href="#朴素贝叶斯">6 朴素贝叶斯</a>
+<ul>
+<li><a href="#model-fitting">6.1 Model fitting</a>
+<ul>
+<li><a href="#最大似然估计">6.1.1 最大似然估计</a></li>
+<li><a href="#bayesian-naive-bayes">6.1.2 Bayesian naive Bayes</a></li>
+<li><a href="#using-the-model-for-prediction">6.1.3 Using the model for prediction</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+            </nav>
+          </aside>
+        
+        <h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
+<p>先来说一下<strong>生成式模型(generative models)</strong> 和 <strong>判别式模型(discriminative models)</strong>.</p>
+<p>对于分类问题, 我们的目标是基于有限的训练样本集尽可能准确地估计出后验概率<span class="math inline">\(p(c\vert x)\)</span>, 而估计该后验概率有两种方式:</p>
+<ul>
+<li>判别式模型: 直接建模<span class="math inline">\(p(c \vert x)\)</span>.</li>
+<li>生成式模型: 先对联合分布<span class="math inline">\(p(x,c)\)</span>建模, 再由此得到<span class="math inline">\(p(c \vert x)\)</span>.</li>
+</ul>
+<p>本章着眼于生成式模型, 由贝叶斯定理可得 <span class="math display">\[p(c\vert x)=\frac{p(x\vert c)p(c)}{p(x)}\]</span></p>
+<p>所以问题关键就在于求得</p>
+<ul>
+<li>类条件概率分布(class-conditional density) <span class="math inline">\(p(x\vert c)\)</span></li>
+<li>先验分布 <span class="math inline">\(p(c)\)</span></li>
+</ul>
+<h1 data-number="2" id="概率分布"><span class="header-section-number">2</span> 概率分布</h1>
+<p>继续进行之前, 这里先罗列一下本章涉及的一些概率分布.</p>
+<h2 data-number="2.1" id="伯努利分布和二项分布"><span class="header-section-number">2.1</span> 伯努利分布和二项分布</h2>
+<p>可用来建模掷硬币的结果</p>
+<ul>
+<li><p>伯努利分布</p>
+<p><span class="math display">\[X \sim Ber(\theta)\]</span> <span class="math display">\[Ber(x\vert \theta) = \theta^{\mathbb{I}(x=1)}(1-\theta)^{\mathbb{I}(x=0)}\]</span></p>
+<p>即随机变量<span class="math inline">\(X \in \{0,1\}\)</span>, 且 <span class="math display">\[p(X=1) = \theta\]</span> <span class="math display">\[p(X=0) = 1 - \theta\]</span></p></li>
+<li><p>二项分布</p>
+<p><span class="math display">\[X \sim Bin(n,\theta)\]</span> <span class="math display">\[Bin(k\vert n,\theta) = \binom{n}{k} \theta^k (1-\theta)^{n-k} \]</span></p>
+<p>即随机变量<span class="math inline">\(X \in \{0,\dots, n\}\)</span>, 且 <span class="math display">\[p(X=k) =  \binom{n}{k} \theta^k (1-\theta)^{n-k}\]</span></p></li>
+</ul>
+<h2 data-number="2.2" id="多伯努利分布和多项分布"><span class="header-section-number">2.2</span> 多伯努利分布和多项分布</h2>
+<p>可用来建模掷具有<span class="math inline">\(K\)</span>面的骰子的结果</p>
+<ul>
+<li><p>多伯努利分布</p>
+<p><span class="math display">\[X \sim Cat(\theta)\]</span> <span class="math display">\[Cat(x\vert \theta) = \prod_{j=1}^K \theta_j^{\mathbb{I}(x_j=1)}\]</span></p>
+<p><span class="math inline">\(X\)</span>取值为<span class="math inline">\(K\)</span>维one-hot编码.</p></li>
+<li><p>多项分布</p>
+<p><span class="math display">\[X \sim Mu(n, \theta)\]</span> <span class="math display">\[Mu(x\vert n,\theta) = \binom{n}{x_1 \dots x_K} \prod_{j=1}^K \theta_j^k\]</span></p>
+<p><span class="math inline">\(X\)</span>是K维向量, 且满足 <span class="math display">\[x_k\in\{0,\dots,n\}\]</span> <span class="math display">\[\sum_{k=1}^Kx_k = n\]</span></p></li>
+</ul>
+<h2 data-number="2.3" id="贝塔分布和狄利克雷分布"><span class="header-section-number">2.3</span> 贝塔分布和狄利克雷分布</h2>
+<ul>
+<li><p>贝塔分布</p>
+<p><span class="math display">\[X \sim Beta(a,b)\]</span> <span class="math display">\[Beta(x\vert a,b) = \frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1}\]</span></p>
+<p><span class="math inline">\(X\)</span>取值范围是<span class="math inline">\([0,1]\)</span>. 要求<span class="math inline">\(a,b&gt;0\)</span>. 当<span class="math inline">\(a=b=1\)</span>时退化为<span class="math inline">\([0,1]\)</span>上的均匀分布.</p></li>
+<li><p>狄利克雷分布</p>
+<p>贝塔分布的多元扩展, 相当于考虑的是多个随机变量的联合分布.</p>
+<p><span class="math display">\[X \sim Dir(\alpha_1,\dots, \alpha_k)\]</span> <span class="math display">\[Dir(x\vert \alpha_1,\dots,\alpha_k) = \frac{1}{B(\alpha_1,\dots,\alpha_k)}\prod_{k=1}^K x_k^{\alpha_k - 1} \mathbb{I}(x\in S_K)\]</span></p>
+<p>其中<span class="math display">\[ S_K = \{x:0\leq x_k \leq 1, \sum_{k=1}^K x_k = 1\}\]</span></p>
+<p>狄利克雷分布在<span class="math inline">\(S_K\)</span>以外的地方概率为<span class="math inline">\(0\)</span>.</p></li>
+</ul>
+<h1 data-number="3" id="贝叶斯概念学习"><span class="header-section-number">3</span> 贝叶斯概念学习</h1>
+<p>类比于小孩子学习理解单词的含义, 概念学习可以等价于二分类问题, 即学习一个函数<span class="math inline">\(f(x)\)</span>, 如果<span class="math inline">\(x\)</span>是概念<span class="math inline">\(C\)</span>的一个实例, 则<span class="math inline">\(f(x)=1\)</span>, 否则<span class="math inline">\(f(x)=0\)</span>. 一般处理二分类问题时会从正例和反例中同时学习, 但本小节介绍的例子只从正例中学习.</p>
+<h2 data-number="3.1" id="数字游戏"><span class="header-section-number">3.1</span> 数字游戏</h2>
+<p>首先我会选择一个范围在<span class="math inline">\([1,100]\)</span>的整数代数概念<span class="math inline">\(C\)</span>(不会告诉你), 比如质数, <span class="math inline">\(1\)</span>到<span class="math inline">\(10\)</span>之间的数等等. 然后我会告诉你数字<span class="math inline">\(\mathcal{D}=\{x_1,\dots,x_N\}\)</span>是从概念<span class="math inline">\(C\)</span>中随机挑选出来的. 比如假设我之前选的概念<span class="math inline">\(C\)</span>是奇数, 那么我可能告诉你<span class="math inline">\(\{3,17,5,97\}\)</span>这些数字. 然后接下来问你一些新的数字<span class="math inline">\(\tilde{x}\)</span>是否属于概念<span class="math inline">\(C\)</span>. 其实就是让你在给定一些正例的情况下猜测我之前设定的概念<span class="math inline">\(C\)</span>是什么.</p>
+<p>比如告诉你 <span class="math inline">\(\{2,4,8,16,32\}\)</span> 这些数字属于概念<span class="math inline">\(C\)</span>, 那么问你<span class="math inline">\(62\)</span>属于概念<span class="math inline">\(C\)</span>吗? 我们基于这些数字可能会猜测概念<span class="math inline">\(C\)</span>大概率是<span class="math inline">\(2^n\)</span>, 所以判断<span class="math inline">\(62\)</span>不属于概念<span class="math inline">\(C\)</span>. 那么如果再告诉你<span class="math inline">\(30\)</span>也属于概念<span class="math inline">\(C\)</span>, 那么现在你觉得<span class="math inline">\(62\)</span>属于概念<span class="math inline">\(C\)</span>吗? 这时候我们就可能认为概念<span class="math inline">\(C\)</span>是偶数吧, 然后判断<span class="math inline">\(62\)</span>属于概念<span class="math inline">\(C\)</span>.</p>
+<p>怎么来解释和模拟上述行为呢? 一种方法是用假设空间(hypothesis space)和版本空间(version space). 最开始我们对概念<span class="math inline">\(C\)</span>有一个假设空间<span class="math inline">\(\mathcal{H}\)</span>, 比如质数, 奇数, <span class="math inline">\(10\)</span>的倍数等等. 然后当我们看到一些正例时, 那些符合正例的概念构成的<span class="math inline">\(\mathcal{H}\)</span>的子集就是版本空间. 随着我们看到的正例越多, 版本空间会越来越小(至少不会增大), 表示着我们离正确概念越来越近(如果假设空间包含正确概念的话). 以上面的例子为例, 当我们看到<span class="math inline">\(\{2,4,8,16,32,128\}\)</span>时, 偶数, <span class="math inline">\(2^n\)</span>等等这些概念都在版本空间中, 质数等概念不在版本空间中, 当我们又看到<span class="math inline">\(30\)</span>时, 概念<span class="math inline">\(2^n\)</span>也从版本空间中删除.</p>
+<p>另外一个问题是我们看到<span class="math inline">\(\{2,4,8,16,32,128\}\)</span>时, 其实<span class="math inline">\(2^n\)</span>和偶数都在版本空间中,那么我们为什么会倾向于<span class="math inline">\(2^n\)</span>呢?</p>
+<h2 data-number="3.2" id="似然"><span class="header-section-number">3.2</span> 似然</h2>
+<p>对于上小节最后一个问题, 直观想法是我们想避免 suspicious coincidence. 即如果概念<span class="math inline">\(C\)</span>是偶数, 那么为什么那么巧我们看到的数都符合<span class="math inline">\(2^n\)</span>. 下面从概率角度解释一下. 我们假定看到的数字是从概念<span class="math inline">\(C\)</span>中均匀随机选取的. 我们引入似然 <span class="math inline">\(p(\mathcal{D}\vert h)\)</span>, 则</p>
+<p><span class="math display">\[p(\{2\}\vert h_{2^n}) = \frac{1}{6} \]</span></p>
+<p>因为在<span class="math inline">\([1,100]\)</span>整数中只有<span class="math inline">\(6\)</span>个整数满足<span class="math inline">\(2^n\)</span>. 而</p>
+<p><span class="math display">\[p(\{2\}\vert h_{even}) = \frac{1}{50}\]</span></p>
+<p>同理可以计算<span class="math display">\[p(\{2,4,8,16,32\}\vert h_{2^n}) \gg p(\{2,4,8,16,32\}\vert h_{even})\]</span> 这就解释了我们为什么会倾向于<span class="math inline">\(2^n\)</span>(这里默认了不同概念先验概率相等).</p>
+<h2 data-number="3.3" id="先验"><span class="header-section-number">3.3</span> 先验</h2>
+<p>还是上面的例子, 看到<span class="math inline">\(\{2,4,8,16,32\}\)</span>这些数, 概念“满足<span class="math inline">\(2^n\)</span>且不是<span class="math inline">\(64\)</span>”比<span class="math inline">\(2^n\)</span>更符合数据, 但是前一个怪怪的不自然, 我们可以给这种概念赋予较小的先验概率, 即 <span class="math display">\[p(C=h_{2^n且不包含64}) &lt; p(C=h_{2^n})\]</span></p>
+<h2 data-number="3.4" id="后验"><span class="header-section-number">3.4</span> 后验</h2>
+<p>后验概率正比于似然乘上先验, 即 <span class="math display">\[p(h\vert \mathcal{D}) \propto p(\mathcal{D}\vert h)p(h) \]</span> 当数据量比较多时, 后验概率在某个概念上值比较大, 这个概念就是所谓的<strong>最大后验概率估计(MAP)</strong>. 即 <span class="math display">\[\hat{h}^{MAP} = \arg\max_h \ \ p(h\vert \mathcal{D})\]</span> 由贝叶斯公式,上式可以写成 <span class="math display">\[\hat{h}^{MAP} = \arg\max_h \ \ p(\mathcal{D}\vert h)p(h) = \arg\max_h \ \ [\log p(\mathcal{D}\vert h) + \log p(h)] \]</span> 似然项会变(指数依赖样本大小<span class="math inline">\(N\)</span>), 而先验项保持不变. 当数据量变大时, MAP趋向于<strong>最大似然估计(MLE)</strong>. <span class="math display">\[\hat{h}^{MLE} = \arg\max_h \ \ p(\mathcal{D}\vert h) = \arg\max_h \ \ \log p(\mathcal{D}\vert h)\]</span> 换句话说, 当我们有足够数据量时, 数据会忽略掉先验. MAP会收敛到MLE.</p>
+<h2 data-number="3.5" id="后验预测分布"><span class="header-section-number">3.5</span> 后验预测分布</h2>
+<p>我们得到的后验概率分布是在观测到现有数据的条件下,假设空间中那些概念是实际概念的概率. 但是现在给我们一个新的数字<span class="math inline">\(\tilde{x}\)</span>, 我们怎么决策它是否属于实际概念<span class="math inline">\(C\)</span>呢? 这就是后验预测分布干的活. 这种情形下的后验预测分布为 <span class="math display">\[p(\tilde{x} \in C \vert  \mathcal{D}) = \sum_h p(y=1\vert \tilde{x},h) p(h\vert \mathcal{D})\]</span> 本质上就是对假设空间中的概念的预测结果做一个加权平均, 权重就是概念对应的后验概率. 这个成为<strong>贝叶斯模型平均(Bayes model averaging)</strong>.</p>
+<p>当数据量很小时,可能后验概率分布很广泛. 但是当数据量很多, 多到几乎“暴露”出真实概念时, 这个时候后验概率会集中在最大后验概率的那个概念上. 这时候后验预测分布就可以近似为 <span class="math display">\[p(\tilde{x} \in C \vert  \mathcal{D}) = p(\tilde{x}\vert \hat{h}^{MAP})\]</span> 这个被称为预测分布的<strong>plug-in approximation</strong>.</p>
+<h3 data-number="3.5.1" id="bma-vs-plug-in-approximation"><span class="header-section-number">3.5.1</span> BMA vs Plug-in Approximation</h3>
+<p>随着数据的增多</p>
+<ul>
+<li>BMA由宽到窄.</li>
+<li>Plug-in Approximation由窄到宽.</li>
+</ul>
+<p>啥意思呢? 就是比如我们上来只看到一个数据<span class="math inline">\(\{16\}\)</span>, 这时候给你一个<span class="math inline">\(\tilde{x}=8\)</span>问你属不属于概念<span class="math inline">\(C\)</span>. BMA这时候一脸懵逼不敢妄下断言, 很多概念的后验概率都非零, 而且没有某个概念后验概率很大, 它的标准放得很宽,更有可能回答是. 但是Plug-in Approximation就不一样了, 它上来就从假设空间中挑一个最大化后验概率的那个概念(假设挑出的是<span class="math inline">\(4^n\)</span>), 那么它的回答就是否. 但是如果接下来告诉我们<span class="math inline">\(\{2,4,64\}\)</span>也是正例, 这时候<span class="math inline">\(2^n\)</span>对应的后验概率可能大于其他概念, 那BMA会进行相应的调整, 收窄自己的标准, 而Plug-in Approximation也会调整(假设就调整成了<span class="math inline">\(2^n\)</span>), 相比于<span class="math inline">\(4^n\)</span>, 它是放宽了自己的标准. 虽然在数据量比较小时两种方法会有偏差, 但当数据量很大时, 两种方法收敛到相同的标准.</p>
+<h1 data-number="4" id="the-beta-binomial-model"><span class="header-section-number">4</span> The beta-binomial model</h1>
+<p>本小节讨论给定一系列观察到的掷硬币的结果, 预测下一次掷硬币出现正面的概率. 叙述方式与上一节相同 似然 -&gt; 先验 -&gt; 后验 -&gt; 后验预测</p>
+<h2 data-number="4.1" id="似然-1"><span class="header-section-number">4.1</span> 似然</h2>
+<p>假设 <span class="math inline">\(X_i \sim Ber(\theta)\)</span>, 其中<span class="math inline">\(X_i=1\)</span>表示正面, <span class="math inline">\(X_i=0\)</span>表示反面, <span class="math inline">\(\theta \in [0,1]\)</span>是参数(表示正面的概率). 如果数据 iid, 那么似然为 <span class="math display">\[p(\mathcal{D}\vert \theta) = \theta^{N_1}(1-\theta)^{N_0}\]</span> 实际上是一个二项分布. &gt; 注: 这里的每一个<span class="math inline">\(\theta\)</span>对应的伯努利分布就相当于上节中的假设空间中的一个概念<span class="math inline">\(h\)</span>.</p>
+<h2 data-number="4.2" id="先验-1"><span class="header-section-number">4.2</span> 先验</h2>
+<p>我们要给<span class="math inline">\(\theta\)</span>一个先验分布, <span class="math inline">\(\theta\)</span>取值范围为<span class="math inline">\([0,1]\)</span>, 表示我们在观察数据之前对<span class="math inline">\(\theta\)</span>的认识. 如果先验分布和上节的似然具有相同的形式, 那么数学上计算会很方便. 综上两点, Beta分布当仁不让. <span class="math display">\[Beta(\theta\vert a,b) \propto \theta^{a-1}(1-\theta)^{b-1}\]</span> 此时后验分布具有和先验分布相同的形式. 同时先验中的<span class="math inline">\(a,b\)</span>是超参数, 需要我们自己设定, <span class="math inline">\(a,b\)</span>的取值融合了我们对<span class="math inline">\(\theta\)</span>的认识, 比如我们认为<span class="math inline">\(\theta\)</span>具有均值<span class="math inline">\(0.7\)</span>, 方差<span class="math inline">\(0.2\)</span>, 那么我们就可以设置为<span class="math inline">\(a=2.975,b=1.275\)</span>. 或者我们对<span class="math inline">\(\theta\)</span>一无所知, 那我们可以设置为均匀分布<span class="math inline">\(a=b=1\)</span>.</p>
+<blockquote>
+<p><strong>共轭先验</strong>: 如果先验分布和似然函数可以使得先验分布和后验分布有相同的形式，那么就称先验分布与似然函数是共轭的，共轭的结局是让先验与后验具有相同的形式. 再强调一遍, 共轭先验指的是对于似然来说这个先验是共轭先验.</p>
+</blockquote>
+<h2 data-number="4.3" id="后验-1"><span class="header-section-number">4.3</span> 后验</h2>
+<p>后验概率分布为 <span class="math display">\[p(\theta\vert \mathcal{D}) \propto Bin(N_1\vert \theta, N_0+N_1)\ Beta(\theta\vert a,b) \propto Beta(\theta\vert N_1+a, N_0+b)\]</span> 由Beta分布的性质(mode的表达式)可得 <span class="math display">\[\hat{\theta}_{MAP} = \frac{a+N_1-1}{a+b+N_0+N_1-2}\]</span> 如果先验为均匀分布(<span class="math inline">\(a=b=1\)</span>), 则上式退化为 <span class="math display">\[\hat{\theta}_{MLE} = \frac{N_1}{N_0+N_1}\]</span> 后验概率分布的均值为 <span class="math display">\[\bar{\theta} = \frac{a+N_1}{a+b+N_0+N_1}\]</span> 进一步可以证明, <strong>后验概率分布的均值是先验均分布的均值和最大似然估计的凸组合</strong>. 即 <span class="math display">\[\mathbb{E}[\theta\vert \mathcal{D}] = \lambda \frac{a}{a+b} + (1-\lambda)\hat{\theta}_{MLE}\]</span> 也就是说, 后验是我们观察数据之前相信的知识和数据想要告诉我们的知识的一个折中.</p>
+<h2 data-number="4.4" id="后验预测分布-1"><span class="header-section-number">4.4</span> 后验预测分布</h2>
+<p>当我们有了后验概率分布<span class="math inline">\(Beta(c,d)\)</span>后, 我们要预测下一次掷硬币是正面的概率. <span class="math display">\[p(\tilde{x}=1\vert \mathcal{D}) = \int_0^1 p(x=1\vert \theta)p(\theta\vert \mathcal{D})d\theta\]</span> 即把<span class="math inline">\(\theta\)</span>当成随机变量看待, 对<span class="math inline">\(\theta\)</span>所有可能情况进行汇总. 带入 <span class="math inline">\(p(x=1\vert \theta)=\theta\)</span>, <span class="math inline">\(p(\theta\vert \mathcal{D})=Beta(\theta\vert c,d)\)</span>可得 <span class="math display">\[p(\tilde{x}=1\vert \mathcal{D}) = \int_0^1\theta Beta(\theta\vert c,d) d\theta = \mathbb{E}[\theta\vert \mathcal{D}] = \frac{c}{c+d}\]</span> 即在这个例子中我们有 <span class="math display">\[p(\tilde{x}\vert \mathcal{D})=Ber(\tilde{x}\vert \mathbb{E}[\theta\vert \mathcal{D}])\]</span></p>
+<h3 data-number="4.4.1" id="过拟合问题"><span class="header-section-number">4.4.1</span> 过拟合问题</h3>
+<p>如果我们在预测时不使用上面的BMA, 而是使用 <span class="math display">\[p(\tilde{x}\vert \mathcal{D})=Ber(\tilde{x}\vert \hat{\theta}_{MLE})\]</span> 即 <span class="math display">\[p(\tilde{x}=1\vert \mathcal{D}) = \hat{\theta}_{MLE} = \frac{N_1}{N_0+N_1} \]</span> 在数据集比较小时, 这非常容易过拟合, 比如样本集合为<span class="math inline">\(3\)</span>次观测结果,且全是反面, 那么根据最大似然估计 <span class="math display">\[p(\tilde{x}=1\vert \mathcal{D}) = \hat{\theta}_{MLE} = \frac{N_1}{N_0+N_1} = 0 \]</span> 而贝叶斯方法可以很好的克服这个问题, 比如我们假定先验分布为均匀分布<span class="math inline">\(a=b=1\)</span>, 那么根据后验预测分布我们有 <span class="math display">\[p(\tilde{x}=1\vert \mathcal{D}) = \mathbb{E}[\theta\vert \mathcal{D}] = \frac{c}{c+d} = \frac{N_1+1}{N_0+N_1+2} = \frac{1}{5}\]</span> 这正对应着<strong>加一平滑</strong>这种技巧.</p>
+<h1 data-number="5" id="the-dirichlet-multinomial-model"><span class="header-section-number">5</span> The Dirichlet-multinomial model</h1>
+<p>本小节讨论给定一系列观察到的掷具有<span class="math inline">\(K\)</span>面骰子的结果, 预测下一次掷骰子出现每一面的概率. 叙述方式与上一节相同 似然 -&gt; 先验 -&gt; 后验 -&gt; 后验预测</p>
+<h2 data-number="5.1" id="似然-2"><span class="header-section-number">5.1</span> 似然</h2>
+<p>假设数据 iid, 那么似然为 <span class="math display">\[p(\mathcal{D}\vert \theta) = \prod_{i=1}^K \theta_k^{N_k}\]</span> 实际上是一个多项分布.</p>
+<h2 data-number="5.2" id="先验-2"><span class="header-section-number">5.2</span> 先验</h2>
+<p>选取先验时我们主要考虑两点, 一是参数<span class="math inline">\(\theta\)</span>取值范围, 另一个是希望先验对于似然来说是共轭先验. Dirichlet分布满足这两个条件. <span class="math display">\[Dir(\theta\vert \alpha_1,\dots,\alpha_K) = \frac{1}{B(\alpha_1,\dots,\alpha_K)}\prod_{k=1}^K \theta_k^ {\alpha_k-1}\mathbb{I}(\theta \in S_K)\]</span></p>
+<h2 data-number="5.3" id="后验-2"><span class="header-section-number">5.3</span> 后验</h2>
+<p>后验概率分布依然是Dirichlet分布 <span class="math display">\[p(\theta\vert \mathcal{D}) \propto p(\mathcal{D}\vert \theta)p(\theta) = Dir(\theta \vert  \alpha_1+N_1,\dots, \alpha_K+N_K)\]</span></p>
+<p>后验概率分布的MAP估计是 <span class="math display">\[\hat{\theta}_k^{MAP} = \frac{N_k+\alpha_k-1}{N_1+\dots+N_k+\alpha_1+\dots+\alpha_K-K}\]</span> 当先验分布退化为均匀分布时,MAP退化为MLE <span class="math display">\[\hat{\theta}_k^{MAP} = \frac{N_k}{N_1+\dots+N_k}\]</span></p>
+<h2 data-number="5.4" id="后验预测分布-2"><span class="header-section-number">5.4</span> 后验预测分布</h2>
+<p>预测下一次掷骰子出现每一面的概率 <span class="math display">\[
+\begin{align}
+p(X=j\vert \mathcal{D}) &amp;=&amp; \int p(X=j\vert \theta)p(\theta\vert \mathcal{D})d\theta \\
+&amp;=&amp; \frac{\alpha_j+N_j}{\alpha_1+\dots+\alpha_K + N_1+\dots+N_K}
+\end{align}
+\]</span></p>
+<h1 data-number="6" id="朴素贝叶斯"><span class="header-section-number">6</span> 朴素贝叶斯</h1>
+<p>朴素贝叶斯可以用来解决<span class="math inline">\(K\)</span>分类问题. 问题定义: <span class="math inline">\(X \in \mathbb{R}^D\)</span>, <span class="math inline">\(Y \in \{1, \dots, K\}\)</span>. 给定数据集<span class="math inline">\(\mathcal{D}=\{(X_1,Y_1),\dots, (X_n,Y_n)\}\)</span>, 给新的样本数据<span class="math inline">\(X\)</span>分类,即求 <span class="math display">\[p(Y\vert X,\mathcal{D})\]</span> 我们可以利用贝叶斯公式,分别求出<span class="math inline">\(p(X\vert Y,\mathcal{D})\)</span>和<span class="math inline">\(p(Y)\)</span>. 但是求解<span class="math inline">\(p(X\vert Y,\mathcal{D})\)</span>复杂度太高, 比如假设<span class="math inline">\(X\)</span>的每一维取值范围为离散值,且大小为<span class="math inline">\(S\)</span>, 那么<span class="math inline">\(p(X\vert Y,\mathcal{D})\)</span>的参数个数将达到<span class="math inline">\(KS^D\)</span>. 为了解决这个问题,朴素贝叶斯做了一个很强的假设:在给定类别的条件下, 特征之间相互独立. 即 <span class="math display">\[p(X\vert Y=c) = \prod_{i=1}^D p(X^{(i)}\vert Y=c)\]</span></p>
+<h2 data-number="6.1" id="model-fitting"><span class="header-section-number">6.1</span> Model fitting</h2>
+<h3 data-number="6.1.1" id="最大似然估计"><span class="header-section-number">6.1.1</span> 最大似然估计</h3>
+<p>对于一个样本<span class="math inline">\((X_i,Y_i)\)</span>, 似然函数为</p>
+<p><span class="math display">\[
+\begin{align}
+p(X_i,Y_i\vert \vec{\theta}) &amp;=&amp; p(Y_i\vert \vec{\theta})p(X_i\vert Y_i,\vec{\theta}) \\
+&amp;=&amp; p(Y_i\vert \vec{\theta}) \prod_{j=1}^{D} p(X_i^{(j)}\vert Y_i,\vec{\theta})
+\end{align}
+\]</span></p>
+<p>其中<span class="math inline">\(\vec{\theta} = \{\pi_1,\dots,\pi_K, \vec{\theta}_{11},\dots,\vec{\theta}_{DK}\}\)</span>, 这里<span class="math inline">\(\pi_i\)</span>是针对<span class="math inline">\(p(Y=i)\)</span>的参数, <span class="math inline">\(\vec{\theta}_{jc}\)</span>是针对<span class="math inline">\(p(X^{(j)}\vert Y=c)\)</span>的参数. <span class="math inline">\(\vec{\theta}_{jc}\)</span>取决于第<span class="math inline">\(j\)</span>维特征选取什么样的分布. 对于数据集<span class="math inline">\(\mathcal{D}=\{(X_1,Y_1),\dots, (X_n,Y_n)\}\)</span>, 可计算似然函数为 <span class="math display">\[
+\begin{align}
+p(\mathcal{D}\vert \theta) &amp;=&amp; \prod_{i=1}^n p(Y_i\vert \theta) \prod_{i=1}^n\prod_{j=1}^D  p(X_i^{(j)}\vert Y_i,\theta) \\
+&amp;=&amp; \prod_{i=1}^n p(Y_i\vert \theta) \prod_{i=1}^n\prod_{j=1}^D  \prod_{c=1}^K p(X_i^{(j)}\vert \theta_{jc})^{\mathbb{I}(Y_i=c)}
+\end{align}
+\]</span> 求对数可得 <span class="math display">\[\log p(\mathcal{D}\vert \theta) = \sum_{c=1}^K N_c\log \pi_c + \sum_{j=1}^{D}\sum_{c=1}^K\sum_{i: Y_i=c}p(X_i^{(j)}\vert \theta_{jc})\]</span></p>
+<p>在求解<span class="math inline">\(\vec{\pi}\)</span>时, 需要带入约束<span class="math inline">\(\sum\limits_{c=1}^K\pi_c=1\)</span>, 利用拉格朗日乘子法可得 <span class="math display">\[\pi_c^{MLE} = \frac{N_c}{N_1+\dots+N_K}\]</span> 而<span class="math inline">\(\vec{\theta}_{jc}\)</span>需要知道特征分布的具体形式才可以求.</p>
+<h3 data-number="6.1.2" id="bayesian-naive-bayes"><span class="header-section-number">6.1.2</span> Bayesian naive Bayes</h3>
+<p>最大似然估计有个缺点是过拟合, 比如上面对<span class="math inline">\(\pi_c\)</span>的估计, 当<span class="math inline">\(N_c=0\)</span>时, <span class="math inline">\(\pi_c^{MLE} = 0\)</span>. 为了解决过拟合问题, Bayes方法采用合适的先验分布, 比如我们使用下面形式的先验分布 <span class="math display">\[p(\theta) = p(\pi)\prod_{j=1}^D\prod_{c=1}^Kp(\theta_{jc})\]</span> 其中<span class="math inline">\(\pi\)</span>使用Dirichlet分布, 如果每个特征是伯努利分布, 那我们就取<span class="math inline">\(\theta_{jc}\)</span>为Beta分布. 那么后验分布为 <span class="math display">\[p(\theta\vert \mathcal{D}) = p(\pi\vert \mathcal{D})\prod_{j=1}^D\prod_{c=1}^Kp(\theta_{jc}\vert \mathcal{D})\]</span></p>
+<h3 data-number="6.1.3" id="using-the-model-for-prediction"><span class="header-section-number">6.1.3</span> Using the model for prediction</h3>
+<p>最后的目标是用模型进行预测, 即计算 <span class="math display">\[p(y=c\vert x,\mathcal{D}) \propto p(y=c\vert \mathcal{D})\prod_{j=1}^Dp(x_j\vert y=c_j,\mathcal{D})\]</span> 按照Bayes的方法, 我们需要计算 <span class="math display">\[p(y=c\vert x,\mathcal{D}) \propto [\int Cat(y=c\vert \pi) p(\pi\vert \mathcal{D})d\pi] \prod_{j=1}^D\int Ber(x_j\vert y=c,\vec{\theta_{jc}})p(\vec{\theta_{jc}}\vert \mathcal{D})d\vec{\theta_{jc}}\]</span></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/mlapp" class="page__taxonomy-item" rel="tag">mlapp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" class="page__taxonomy-item" rel="tag">机器学习</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/%E7%AC%94%E8%AE%B0" class="page__taxonomy-item" rel="tag">笔记</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2018-11-28T00:00:00+00:00">November 28, 2018</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">分享</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%20https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E7%25A6%25BB%25E6%2595%25A3%25E6%2595%25B0%25E6%258D%25AE%25E7%2594%259F%25E6%2588%2590%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E7%25A6%25BB%25E6%2595%25A3%25E6%2595%25B0%25E6%258D%25AE%25E7%2594%259F%25E6%2588%2590%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E7%25A6%25BB%25E6%2595%25A3%25E6%2595%25B0%25E6%258D%25AE%25E7%2594%259F%25E6%2588%2590%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/" class="pagination--pager" title="MLAPP笔记-概率
+">向前</a>
+    
+    
+      <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/" class="pagination--pager" title="MLAPP笔记-高斯模型
+">向后</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">留下评论</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="permalink">个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/" rel="permalink">MLAPP笔记-高斯模型
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/" rel="permalink">MLAPP笔记-概率
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      输入您要搜索的关键词...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <!-- 注释掉页脚的关注
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+-->
+<a href="/sitemap.xml"><i class="fas fa-fw fa-sitemap" aria-hidden="true"></i> Sitemap </a> <a href="/feed.xml"><i class="fas fa-fw fa-rss" aria-hidden="true"></i> RSS </a>
+
+<div class="page__footer-copyright">&copy; 2020 Xikun Huang. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-125987068-1']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/%E7%AC%94%E8%AE%B0/MLAPP笔记-离散数据生成模型"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xikunhuang.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  chtml: {
+    scale: 0.8,  // global scaling factor for all expressions
+  }
+};
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+</script>
+
+
+
+  </body>
+</html>

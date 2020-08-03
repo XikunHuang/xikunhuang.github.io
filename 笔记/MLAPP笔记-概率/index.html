@@ -1,0 +1,570 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MLAPP笔记-概率 | Xikun</title>
+<meta name="description" content="A personal website.">
+
+
+  <meta name="author" content="  黄锡昆">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="Xikun">
+<meta property="og:title" content="MLAPP笔记-概率">
+<meta property="og:url" content="https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/">
+
+
+  <meta property="og:description" content="A personal website.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2018-11-27T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Xikun Huang",
+      "url": "https://xikunhuang.github.io/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="3cHjtRtxjFNDcyWaXaOeICJD6X3bs6TFi1lkf9Zwmt8" />
+
+
+  <meta name="msvalidate.01" content="24CDABDB76E94CB76BF9822CC2D90C1A">
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xikun Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<!-- link rel="stylesheet" href="/minimal-mistakes/assets/css/pandoc-tango-syntax-highlight.css" --> 
+<link rel="stylesheet" href="/assets/css/pandoc-zenburn-syntax-highlight.css">
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到页脚</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          黄锡昆的个人主页
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/">博客</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">类别</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">关于</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">切换搜索</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MLAPP笔记-概率">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2018-11-27T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MLAPP笔记-概率
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 本文目录</h4></header>
+              
+
+
+
+<ul class="toc__menu">
+<li><a href="#简介">1 简介</a></li>
+<li><a href="#概率论">2 概率论</a>
+<ul>
+<li><a href="#贝叶斯公式">2.1 贝叶斯公式</a></li>
+<li><a href="#独立性">2.2 独立性</a></li>
+</ul></li>
+<li><a href="#概率分布">3 概率分布</a></li>
+<li><a href="#随机变量的变换">4 随机变量的变换</a></li>
+<li><a href="#蒙特卡洛近似">5 蒙特卡洛近似</a></li>
+<li><a href="#信息论">6 信息论</a>
+<ul>
+<li><a href="#熵entropy">6.1 熵(entropy)</a></li>
+<li><a href="#kl散度kl-divergence">6.2 KL散度(KL divergence)</a></li>
+<li><a href="#交叉熵cross-entropy">6.3 交叉熵(cross entropy)</a></li>
+<li><a href="#互信息mutual-information">6.4 互信息(mutual information)</a></li>
+<li><a href="#条件熵conditional-entropy">6.5 条件熵(conditional entropy)</a></li>
+</ul></li>
+</ul>
+
+
+            </nav>
+          </aside>
+        
+        <h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
+<p>概率两大派:</p>
+<ul>
+<li>频率学派(frequentist)</li>
+<li>贝叶斯学派(Bayesian)</li>
+</ul>
+<p>频率学派将概率解释为事件在多次实验下发生的频率(long run frequencies of events). 贝叶斯学派用概率来量化我们对一些事情的不确定性, 因此概率本质上与信息有关, 而与实验次数无关.</p>
+<p>举个例子, 对于“硬币正面朝上的概率为0.5”这句表述, 频率学派是在说如果我们掷硬币很多次, 那么大概有一半的次数硬币朝上. 而贝叶斯学派是在说我们相信下一次掷硬币出现正面和反面的可能性相同.</p>
+<h1 data-number="2" id="概率论"><span class="header-section-number">2</span> 概率论</h1>
+<p>本小节简单介绍了一些概率论的基本概念和公式, 这里不多赘述. 只记录一些看了有些启发的.</p>
+<h2 data-number="2.1" id="贝叶斯公式"><span class="header-section-number">2.1</span> 贝叶斯公式</h2>
+<p>贝叶斯公式给出的结果往往反“直觉”, 当然这里的“直觉”是错的. 书中正文和习题中给了三个例子.</p>
+<ul>
+<li><p>医疗诊断 &gt; 假设如果人类患有某种疾病y, 那么在检查时指标x为阳性的概率为0.8. 现在如果有个人检测到指标x为阳性, 那么请问: 这个人患有疾病y的概率是多少?</p>
+<p>0.8? 正确答案是不知道, 因为给的信息不足以做出判断. 我们再知道两个信息就可以做出判断: 人群中该疾病患病率是多少? 一个没患病的人检测到指标x为阳性的概率是多少? 这里我们假设 <span class="math inline">\(p(y=1)=0.004, p(x=1\vert y=0)=0.1\)</span>, 那么由此可以计算出<span class="math inline">\(p(y=1\vert x=1)=0.031\)</span>. 换句话说, 即使指标x被检测出阳性, 这个人也只有大约3%的概率真正患有疾病y!</p></li>
+<li><p>公诉人与辩护人谬论 &gt; 假设有一起案件, 案发现场发现了凶手的血迹, 经检查该血型是一种及其罕见的类型(比如说人群中只有1%的人拥有这种血型). 那么现在警察抓住了一个嫌疑人, 并且嫌疑人的血型恰好就是这种类型, 那么请问: 在这种情况下, 这个嫌疑人是真正凶手的概率是多少?</p>
+<p>这种情况下我们会大概率认为这个嫌疑人就是凶手了. 其实不然, 还是信息不够, 不足以做出判断.</p></li>
+<li><p>The Monty Hall problem &gt; 一共三个箱子编号1,2,3. 其中只有一个箱子里面有奖品, 而且主持人知道哪个箱子有礼品. 现在让你猜奖品在哪个箱子里. 假设你选择了1号箱子, 那么主持人接下来打开2号或3号箱子中的一个, 而且主持人会保证不会打开有奖品的箱子(因为如果打开了有奖品的箱子游戏就没法进行下去了…主持人知道哪个箱子有奖品所以可以保证这一点). 现在主持人问你要不要更换自己的选择, 是继续坚持1号箱子,还是换成另一个箱子呢?</p>
+<p>不要犹豫,换! 不换的话赢的概率是1/3,换的话赢的概率是2/3.</p></li>
+</ul>
+<h2 data-number="2.2" id="独立性"><span class="header-section-number">2.2</span> 独立性</h2>
+<ul>
+<li><p>无条件独立 <span class="math display">\[X \perp Y \iff p(X,Y)=p(X)p(Y)\]</span></p></li>
+<li><p>条件独立 <span class="math display">\[X \perp Y \vert  Z \iff p(X,Y\vert Z)=p(X\vert Z)p(Y\vert Z)\]</span> <span class="math display">\[X \perp Y \vert  Z \iff 存在函数g和h使得 p(x,y\vert z)=g(x,z)h(y,z)\]</span></p></li>
+<li><p>两两独立(Pairwise Independent) 和 相互独立(Mutually Indepedent) 相互独立: <span class="math display">\[p(X_i\vert X_S)=p(X_i), \forall S\subseteq\{1,\dots,n\}\setminus\{i\}\]</span> 两两独立推不出相互独立. 反例: X1和X2都是等概率取值{0,1}的随机变量,X3=XOR(X1,X2). 则X1,X2,X3两两独立但是不是相互独立.</p></li>
+<li><p>不相关推不出独立. 所以相关系数不能作为衡量独立性的指标, 更好的指标是后面介绍的互信息. 反例: <span class="math inline">\(X\sim U(-1,1), Y=X^2\)</span></p></li>
+</ul>
+<h1 data-number="3" id="概率分布"><span class="header-section-number">3</span> 概率分布</h1>
+<p>书中介绍了一堆常见的离散型和连续型概率分布, 可是记不住啊…还是要应用…</p>
+<h1 data-number="4" id="随机变量的变换"><span class="header-section-number">4</span> 随机变量的变换</h1>
+<ul>
+<li>change of variables formula</li>
+</ul>
+<h1 data-number="5" id="蒙特卡洛近似"><span class="header-section-number">5</span> 蒙特卡洛近似</h1>
+<p>通常根据随机变量变换公式来计算随机变量函数的分布是很困难的. 一个简单有效的方法是先从分布<span class="math inline">\(X\)</span>中采样<span class="math inline">\(S\)</span>个样本点<span class="math inline">\(x_1,\dots,x_S\)</span>, 然后用<span class="math inline">\(\{f(x_s\}^S_{s=1}\)</span>的实际分布来近似<span class="math inline">\(f(X)\)</span>的分布. 这种方法就是蒙塔卡洛近似.</p>
+<p>进一步可以搞出蒙特卡洛积分.</p>
+<p><span class="math display">\[E[f(X)]=\int f(x)p(x)dx \approx \frac{1}{S}\sum_{s=1}^Sf(x_s)\]</span></p>
+<p>其中<span class="math inline">\(x_s \sim p(X)\)</span>.</p>
+<p>蒙特卡洛近似的精度随着样本规模的变大而增大.</p>
+<h1 data-number="6" id="信息论"><span class="header-section-number">6</span> 信息论</h1>
+<h2 data-number="6.1" id="熵entropy"><span class="header-section-number">6.1</span> 熵(entropy)</h2>
+<p>含义: 度量随机变量的不确定性. <span class="math display">\[\mathbb{H}(X) \triangleq -\sum\limits_{k=1}^Kp(X=k)\log_2 p(X=k)\]</span></p>
+<h2 data-number="6.2" id="kl散度kl-divergence"><span class="header-section-number">6.2</span> KL散度(KL divergence)</h2>
+<p>含义: 度量两个随机变量的差异程度. <span class="math display">\[\mathbb{KL}(p\vert \vert q) \triangleq \sum\limits_{k=1}^K p_k \log \frac{p_k}{q_k}\]</span></p>
+<h2 data-number="6.3" id="交叉熵cross-entropy"><span class="header-section-number">6.3</span> 交叉熵(cross entropy)</h2>
+<p>含义: 当数据真实分布是<span class="math inline">\(p\)</span>, 而我们用分布<span class="math inline">\(q\)</span>编码数据时需要的平均位数. <span class="math display">\[\mathbb{H}(p,q) \triangleq -\sum\limits_k p_k\log q_k\]</span> 注意到<span class="math inline">\(\mathbb{H}(p,p)=\mathbb{H}(p)\)</span>, KL散度可以写成 <span class="math display">\[\mathbb{KL}(p\vert \vert q) = \mathbb{H}(p,q) - \mathbb{H}(p,p)\]</span> 也就是说KL散度的含义是由于我们用分布<span class="math inline">\(q\)</span>而不是数据的真实分布<span class="math inline">\(p\)</span>去编码数据时, 平均需要的额外的位数.</p>
+<h2 data-number="6.4" id="互信息mutual-information"><span class="header-section-number">6.4</span> 互信息(mutual information)</h2>
+<p>含义: 度量联合分布<span class="math inline">\(p(X,Y)\)</span>与<span class="math inline">\(p(X)p(Y)\)</span>的相似程度. <span class="math display">\[\mathbb{I}(X;Y) \triangleq \mathbb{KL}(p(X,Y) \vert \vert  p(X)p(Y)) = \sum\limits_x\sum\limits_y p(x,y)\log\frac{p(x,y)}{p(x)p(y)}\]</span></p>
+<h2 data-number="6.5" id="条件熵conditional-entropy"><span class="header-section-number">6.5</span> 条件熵(conditional entropy)</h2>
+<p><span class="math display">\[\mathbb{H}(Y\vert X) \triangleq \sum\limits_x p(x)\mathbb{H}(Y\vert X=x)\]</span> 可以证明 <span class="math display">\[\mathbb{I}(X;Y) = \mathbb{H}(X) - \mathbb{H}(X\vert Y) = \mathbb{H}(Y) - \mathbb{H}(Y\vert X)\]</span></p>
+<p>下面是几个重要结论</p>
+<ul>
+<li><strong><span class="math inline">\(\mathbb{KL}(p\vert \vert q) \geq 0\)</span> 等号成立当且仅当<span class="math inline">\(p=q\)</span>.</strong> 提示: 递推法证明凸函数的Jensen不等式, 对-log函数应用该不等式即可.</li>
+<li><strong>离散随机变量为均匀分布时熵最大, 且最大值为$<span class="math inline">\(, 其中\)</span><span class="math inline">\(\vert 是\)</span>X$的状态数目.</strong> 提示: 上述结论的重要推论之一. 计算分布p与均匀分布u的KL散度.</li>
+<li><strong>最大似然估计就是最小化模型与实际分布(empirical distribution)的KL散度.</strong> 提示: 大数定律 <span class="math inline">\(E_{x\sim pemp(x)}\log q(x;\theta)=\frac{1}{N}\sum\limits_{i=1}{N}\log q(x;\theta)\)</span></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/mlapp" class="page__taxonomy-item" rel="tag">mlapp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" class="page__taxonomy-item" rel="tag">机器学习</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/%E7%AC%94%E8%AE%B0" class="page__taxonomy-item" rel="tag">笔记</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2018-11-27T00:00:00+00:00">November 27, 2018</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">分享</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87%20https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E6%25A6%2582%25E7%258E%2587%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E6%25A6%2582%25E7%258E%2587%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E6%25A6%2582%25E7%258E%2587%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">向前</a>
+    
+    
+      <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" class="pagination--pager" title="MLAPP笔记-离散数据生成模型
+">向后</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">留下评论</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="permalink">个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/" rel="permalink">MLAPP笔记-高斯模型
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" rel="permalink">MLAPP笔记-离散数据生成模型
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      输入您要搜索的关键词...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <!-- 注释掉页脚的关注
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+-->
+<a href="/sitemap.xml"><i class="fas fa-fw fa-sitemap" aria-hidden="true"></i> Sitemap </a> <a href="/feed.xml"><i class="fas fa-fw fa-rss" aria-hidden="true"></i> RSS </a>
+
+<div class="page__footer-copyright">&copy; 2020 Xikun Huang. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-125987068-1']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/%E7%AC%94%E8%AE%B0/MLAPP笔记-概率"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xikunhuang.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  chtml: {
+    scale: 0.8,  // global scaling factor for all expressions
+  }
+};
+</script>
+
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+</script>
+
+
+
+  </body>
+</html>

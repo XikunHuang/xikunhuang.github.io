@@ -1,0 +1,664 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.3 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc | Xikun</title>
+<meta name="description" content="A personal website.">
+
+
+  <meta name="author" content="  黄锡昆">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="Xikun">
+<meta property="og:title" content="个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc">
+<meta property="og:url" content="https://xikunhuang.github.io/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">
+
+
+  <meta property="og:description" content="A personal website.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-07-31T00:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://xikunhuang.github.io/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Xikun Huang",
+      "url": "https://xikunhuang.github.io/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="3cHjtRtxjFNDcyWaXaOeICJD6X3bs6TFi1lkf9Zwmt8" />
+
+
+  <meta name="msvalidate.01" content="24CDABDB76E94CB76BF9822CC2D90C1A">
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Xikun Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<!-- link rel="stylesheet" href="/minimal-mistakes/assets/css/pandoc-tango-syntax-highlight.css" --> 
+<link rel="stylesheet" href="/assets/css/pandoc-zenburn-syntax-highlight.css">
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到页脚</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          黄锡昆的个人主页
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/posts/">博客</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">类别</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">关于</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">切换搜索</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2020-07-31T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 本文目录</h4></header>
+              
+
+
+
+<ul class="toc__menu">
+<li><a href="#为什么要搭建个人主页">1 为什么要搭建个人主页</a></li>
+<li><a href="#希望有一个什么样的个人主页">2 希望有一个什么样的个人主页</a></li>
+<li><a href="#搭建过程">3 搭建过程</a>
+<ul>
+<li><a href="#工具的选择">3.1 工具的选择</a></li>
+<li><a href="#具体搭建过程">3.2 具体搭建过程</a></li>
+</ul></li>
+<li><a href="#发布博客的流程">4 发布博客的流程</a></li>
+<li><a href="#遇到的问题及解决方案">5 遇到的问题及解决方案</a></li>
+</ul>
+
+
+            </nav>
+          </aside>
+        
+        <h1 data-number="1" id="为什么要搭建个人主页"><span class="header-section-number">1</span> 为什么要搭建个人主页</h1>
+<p>想了一下主要有以下几个原因:</p>
+<ul>
+<li><p>提醒自己及时<strong>记录</strong>所看所思所想.</p></li>
+<li><p><strong>练习</strong>写作能力.</p></li>
+<li><p><strong>分享</strong>自己学习到的知识.</p></li>
+</ul>
+<p>最近越发觉得及时记录自己学到的知识是很重要的一件事, 一方面是好记性不如烂笔头(况且记性还越来越差-.-), 及时记录下来之后方便以后查阅, 因为有些问题过段时间后可能会再次遇到, 查阅之前的记录会大大缩短解决问题需要的时间. 另一方面是在记录的过程中可以训练自己写作的能力, 比如用清晰简洁的语言描述遇到的问题和相应的解决方案. 在写作的过程中可能还会加深对相关知识的理解, 因为写作的过程会不断的思考. 而且我认为写作是需要不断练习才能驾轻就熟的. 此外, 分享也是我创建个人主页的原因. 我在网上寻找相关知识或一些问题的解决方案时发现了很多优质的博客, 他们把自己的知识无偿的分享出来, 从中我学到了很多, 我非常认同这种分享精神, 所以我也想把自己的一些经验分享出来, 如果能帮到别人, 那将是令我非常开心的一件事.</p>
+<h1 data-number="2" id="希望有一个什么样的个人主页"><span class="header-section-number">2</span> 希望有一个什么样的个人主页</h1>
+<p>我对自己的主页有以下几个期待:</p>
+<ul>
+<li><p>专注于内容</p></li>
+<li><p>方便维护</p></li>
+<li><p>页面简洁</p></li>
+<li><p>有一些方便的功能如文章标签, 搜索, 评论等</p></li>
+<li><p>可以被搜索引擎检索到</p></li>
+</ul>
+<p>我希望自己的主页专注于内容, 一方面是在主页里以博客为主, 另一方面是希望可以很简单的将博客发布到个人网页, 这里的简单是指不必改变自己现在的写作环境(Markdown+Pandoc)以及写完后不需要做什么额外的操作, 维护个人主页不需要花费很多的精力. 相比于外表非常酷炫的网页, 我更喜欢简洁的风格. 此外, 为了更好地使用个人主页, 我认为文章标签, 搜索, 评论等功能还是有必要的. 当然, 如果搜索引擎检索不到自己的网页, 那么分享的功能会大打折扣.</p>
+<h1 data-number="3" id="搭建过程"><span class="header-section-number">3</span> 搭建过程</h1>
+<h2 data-number="3.1" id="工具的选择"><span class="header-section-number">3.1</span> 工具的选择</h2>
+<p>我的电脑系统是Ubuntu18.04, 我最终采用的方案是: <strong>GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc</strong>, 原因如下:</p>
+<ul>
+<li><p>GitHub Pages</p>
+<p>我暂时不想自己购买云服务器, 所以GitHub Pages自然成了一个很好的选择.</p></li>
+<li><p>Hexo or Jekyll</p>
+<p>之前用Hexo搭建过, 后来没有坚持更新(第一次搭建都会遇到的问题?哈哈), 还有一个重要的原因是我觉得发布博客有点费事. 所以这次我就试了试Jekyll, 它专注于内容的特性吸引了我.</p></li>
+<li><p>为什么不用Gem包github-pages</p>
+<p>github-pages限制较多, 只能使用部分插件和版本, 主题使用也受限, 虽然可以通过remote theme解决部分主题的问题, 但是本地测试还是麻烦.</p></li>
+<li><p>Minimal Mistakes</p>
+<p>页面简洁, 功能丰富, 文档清晰, 用户众多, 并且一直被主题作者很好地维护着.</p></li>
+<li><p>GitHub Actions</p>
+<p>我的理解是免费给用户配了一台远程服务器. 解决了上述gh-pages的限制, 逻辑上就是将源文件放在gh-pages分支中, 本地修改推送到gh-pages分支, 然后gh-pages分支的更新会触发GitHub Actions工作流配置的一些操作, 这里是在远程服务器上下载Pandoc, Ruby, Jekyll. 将gh-pages分支中的源文件处理成静态网站文件推送到master分支.</p>
+<p>题外话, 如果是为非username.github.io的仓库创建网页(比如为某个仓库myproject创建文档), 那么可以将源文件放在gh-pages分支中, 然后将生成后的静态网页文件部署在master分支中的docs文件夹内. 在myproject仓库设置中设置github pages网址为https://username.github.io/docs. 也可以直接将网站部署在gh-pages分支上, 这样需要在myproject仓库设置中设置github pages网址为gh-pages分支.</p></li>
+<li><p>Pandoc</p>
+<p>文件转换的瑞士军刀, 非常强大的软件. 我选择它的主要原因是在处理Markdown文件时对<span class="math inline">\(\LaTeX\)</span>数学公式支持的很好, 可以使用和<span class="math inline">\(\LaTeX\)</span>一样的数学环境语法处理行内公式和数学环境(单美元符号和双美元符号).</p></li>
+</ul>
+<h2 data-number="3.2" id="具体搭建过程"><span class="header-section-number">3.2</span> 具体搭建过程</h2>
+<p>搜索关键词GitHub Pages + Jekyll, 可以找到很多搭建教程, 比如这几个. 我的搭建过程和这些教程里介绍的差不多, 所以这里我就不写的那么详细了, 我主要是记录一下我做的一些更改, 包括使用Pandoc作为markdown解释器和使用GitHub Actions进行网站的自动部署.</p>
+<ol type="1">
+<li><p><strong>创建GitHub仓库</strong></p>
+<p>在GitHub上新建一个名为 username.github.io 的空的仓库, 这里username替换为自己的github名称. 然后在该仓库中创建一个名为gh-pages的分支. 将gh-pages分支clone到本地, 以后的操作全部在gh-pages分支中. master分支只是用来发布最后生成的静态网站(由GithHub Actions工作流自动完成).</p></li>
+<li><p><strong>安装本地测试环境</strong></p>
+<p>本地安装<a href="https://www.ruby-lang.org/en/">Ruby</a>, <a href="https://jekyllrb.com/">Jekyll</a>, <a href="https://pandoc.org/">Pandoc</a>用于测试, 具体安装方法可以参考对应的官方网站安装指南.</p></li>
+<li><p><strong>Jekyll主题 Minimal Mistakes</strong></p>
+<p>GitHub下载<a href="https://github.com/mmistakes/minimal-mistakes">Minimal Mistakes</a>的仓库, 将<a href="https://github.com/mmistakes/minimal-mistakes/tree/master/docs">docs文件夹</a>内的内容全部放到之前clone下来的username.github.io文件夹内.</p></li>
+<li><p><strong>配置Minimal Mistakes主题</strong></p>
+<ul>
+<li><p>添加<a href="https://jekyllrb.com/docs/">jekyll-pandoc</a>插件, Gemfile和_config.yml文件中都要添加. 然后在_config.yml中修改markdown引擎为Pandoc, 并进行Pandoc命令的配置. 具体配置见后文.</p></li>
+<li><p>_config.yml中主题选择使用theme而不是remote theme.</p></li>
+<li><p>Gemfile中注释掉 gem “github-pages”, group: :jekyll_plugins, 替换为 gem “jekyll”.</p></li>
+</ul></li>
+<li><p><strong>本地测试</strong></p>
+<p>在username.github.io文件夹根目录下终端执行以下命令:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># 安装gem包</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">bundle</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co"># 运行服务</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ex">bundle</span> exec jekyll serve</span></code></pre></div>
+<p>成功的话会生成_sites文件夹, 浏览器访问 https://localhost:4000 即可查看网页.</p></li>
+<li><p><strong>创建GitHub Actions自动部署流程</strong></p>
+<p>在username.github.io文件夹下创建 ./github/workflows/gh-pages.yml 文件, 我使用的配置为:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Build and deploy jekyll site</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="at">    </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="at">        </span><span class="fu">branches</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> gh-pages</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="at">    </span><span class="fu">jekyll</span><span class="kw">:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="at">        </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-18.04</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="at">        </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> 📂 setup</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="at">                </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> setup pandoc</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="at">                </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-pandoc@v1</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="at">                </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="at">                </span><span class="fu">pandoc-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;2.7.3&#39;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> 💎 setup ruby</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a><span class="at">                </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> ruby/setup-ruby@v1</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a><span class="at">                </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a><span class="at">                </span><span class="fu">ruby-version</span><span class="kw">:</span><span class="at"> </span><span class="fl">2.6</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> 🔨 install dependencies &amp; build site</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a><span class="at">                </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> limjh16/jekyll-action-ts@v2</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a><span class="at">                </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a><span class="at">                </span><span class="fu">enable_cache</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> 🚀 deploy</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true"></a><span class="at">                </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> peaceiris/actions-gh-pages@v3</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true"></a><span class="at">                </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true"></a><span class="at">                </span><span class="fu">github_token</span><span class="kw">:</span><span class="at"> $</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true"></a><span class="at">                </span><span class="fu">publish_dir</span><span class="kw">:</span><span class="at"> ./_site</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true"></a><span class="at">                </span><span class="fu">publish_branch</span><span class="kw">:</span><span class="at"> master</span></span></code></pre></div>
+<p>上述配置文件参考自 <a href="https://github.com/limjh16/jekyll-action-ts">limjh16/jekyll-action-ts</a>, <a href="https://github.com/peaceiris/actions-gh-pages">peaceiris/actions-gh-pages</a> 和 <a href="https://github.com/r-lib/actions">r-lib/actions</a>.</p></li>
+<li><p><strong>推送到GitHub</strong></p>
+<p>在username.github.io文件夹下终端运行git推送到远程gh-pages分支, 然后就可以去GitHub网站上的username.github.io仓库中的Actions页面查看进度, 成功完成之后就可以 https://username.github.io 访问主页了.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co"># 确保是在gh-pages分支</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">git</span> checkout gh-pages</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co"># 添加</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="fu">git</span> add .</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="co"># 提交</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="fu">git</span> commit -m <span class="st">&quot;initial commit&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="co"># 推送</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="fu">git</span> push origin gh-pages</span></code></pre></div></li>
+</ol>
+<h1 data-number="4" id="发布博客的流程"><span class="header-section-number">4</span> 发布博客的流程</h1>
+<ol type="1">
+<li><p>使用VSCode写markdown文件, 搭配Pandoc预览.</p></li>
+<li><p>将写好的balbla.md文件重命名为Year-Month-Day-blabla.md的形式, 放到主页存放博客的文件夹内(_posts)</p></li>
+<li><p>这一步可选. 发布到GitHub Pages之前在本地预览效果, 在主页源文件根目录终端运行:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">bundle</span> exec jekyll serve</span></code></pre></div></li>
+<li><p>使用git将博客发布到GitHub Pages. 在主页源文件根目录执行git add, commit, push origin gh-pages操作.</p></li>
+</ol>
+<h1 data-number="5" id="遇到的问题及解决方案"><span class="header-section-number">5</span> 遇到的问题及解决方案</h1>
+<ol type="1">
+<li><p>Markdown文件中使用<span class="math inline">\(\LaTeX\)</span> 数学公式的语法以及后续的渲染.</p>
+<ul>
+<li><p>使用 jekyll-pandoc解决, Gemfile和_config.yml中添加上该插件. 并且在_config.yml中配置Pandoc</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co"># Conversion</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="fu">markdown</span><span class="kw">:</span><span class="at"> Pandoc</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="fu">highlighter</span><span class="kw">:</span><span class="at"> rouge</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="fu">lsi</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="fu">excerpt_separator</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;&lt;!--more--&gt;&quot;</span><span class="co"> # excerpt &quot;\n\n&quot;, set in archive-single.html</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="fu">incremental</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="co"># Markdown Processing</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a><span class="fu">pandoc</span><span class="kw">:</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="at">    </span><span class="fu">extensions</span><span class="kw">:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> mathjax</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> from=markdown</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> to=html</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> number-sections</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="at">        </span><span class="kw">-</span><span class="at"> shift-heading-level-by=-1</span></span></code></pre></div></li>
+<li><p>_includes/scripts.html 添加mathjax的链接. 关于mathjax的设置可以参考 <a href="http://docs.mathjax.org/en/latest/web/components/combined.html#tex-chtml-full">mathjax官方文档</a>, mathjax对<span class="math inline">\(\LaTeX\)</span>的支持可以参考 <a href="http://docs.mathjax.org/en/latest/input/tex/macros/index.html">Supported TeX/LaTeX commands</a>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>{% if page.mathjax %}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="kw">&lt;script&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>MathJax <span class="op">=</span> {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>    <span class="dt">tex</span><span class="op">:</span> {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>        <span class="dt">inlineMath</span><span class="op">:</span> [[<span class="st">&#39;$&#39;</span><span class="op">,</span> <span class="st">&#39;$&#39;</span>]<span class="op">,</span> [<span class="st">&#39;</span><span class="sc">\\</span><span class="st">(&#39;</span><span class="op">,</span> <span class="st">&#39;</span><span class="sc">\\</span><span class="st">)&#39;</span>]]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>    }<span class="op">,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>    <span class="dt">chtml</span><span class="op">:</span> {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>        <span class="dt">scale</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span>  <span class="co">// global scaling factor for all expressions</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>    }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>}<span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="kw">&lt;/script&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a><span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> id=</span><span class="st">&quot;MathJax-script&quot;</span><span class="ot"> async</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="ot">    src=</span><span class="st">&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a><span class="kw">&lt;/script&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a>{% endif %}</span></code></pre></div></li>
+<li><p>GitHub Actions 工作流中添加安装Pandoc这一步.</p></li>
+</ul></li>
+<li><p>Markdown切换为Pandoc时文章目录生成错误.</p>
+<p>原因是Pandoc和Kramdown在Markdown文件中添加Html标签的语法不同, Minimal Mistakes支持Kramdown的语法. 我的解决方法是手动修改include/toc.html文件使得处理后的结果与Kramdown处理后的结果相同. 关键词: , liquid过滤器, filter replace.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>{% comment %}</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>    ## delete toc__menu, add it later using liquid command.</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>    {% if include.class and include.class != blank %}</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>        {% capture my_toc %}{:.{{ include.class }}}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>        {{ my_toc | lstrip }}{% endcapture %}</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>    {% endif %}</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>{% endcomment %}</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>{% capture mytoc_html %}</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>{{ my_toc | markdownify | strip }}</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>{% endcapture %}</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a>{{ mytoc_html | replace_first: &#39;ul&#39;, &#39;ul class=&quot;toc__menu&quot;&#39; }}</span></code></pre></div></li>
+<li><p>我对Minimal Mistakes主题作的其他修改</p>
+<ul>
+<li><p>修改about文件</p>
+<p>在_pages/about.md中修改.</p></li>
+<li><p>添加图标</p>
+<p>使用的是<a href="https://fontawesome.com/">Font Awesome</a>图标.</p></li>
+<li><p>个人头像</p>
+<p>使用<a href="https://app.diagrams.net/">draw.io</a>画的.</p></li>
+<li><p>页脚添加Sitemap</p>
+<p>在 _includes/footer.html文件中修改.</p></li>
+<li><p>SEO, <a href="https://www.google.com/webmasters/#?modal_active=none">google webmaster tool</a>, <a href="https://www.bing.com/webmasters">bing webmaster tool</a>.</p></li>
+<li><p>评论系统, <a href="https://disqus.com/">Disqus</a>.</p></li>
+<li><p>中文定制</p>
+<p>修改 _data/ui-text.yml, _data/navigation.yml文件</p></li>
+<li><p>文章摘录</p>
+<p>excerpt 设置, excerpt_separator. 在_includes/archive-single.html中修改.</p></li>
+<li><p>Pandoc syntax highlight style and css</p>
+<p>我用了个非常简单粗暴的解决方法, 先随便创建一个包含代码块的md文件test.md, 然后运行</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a> <span class="ex">pandoc</span> test.md -s --highlight-style=zenburn -o test.html</span></code></pre></div>
+<p>将test.html里的样式代码复制出来保存成pandoc-zenburn-syntax-highlight.css文件放在assets/css/文件夹内. 在_includes/head/custom.html中添加刚刚创建的css文件链接.</p></li>
+</ul></li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/github-pages" class="page__taxonomy-item" rel="tag">github_pages</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/jekyll" class="page__taxonomy-item" rel="tag">jekyll</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2020-07-31T00:00:00+00:00">July 31, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">分享</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95%E4%B9%8BGitHub+Pages%2FActions+%2B+Jekyll+%2B+Minimal+Mistakes+%2B+Pandoc%20https%3A%2F%2Fxikunhuang.github.io%2F%25E4%25B8%25AA%25E4%25BA%25BA%25E4%25B8%25BB%25E9%25A1%25B5%25E6%2590%25AD%25E5%25BB%25BA%25E8%25AE%25B0%25E5%25BD%2595%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxikunhuang.github.io%2F%25E4%25B8%25AA%25E4%25BA%25BA%25E4%25B8%25BB%25E9%25A1%25B5%25E6%2590%25AD%25E5%25BB%25BA%25E8%25AE%25B0%25E5%25BD%2595%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fxikunhuang.github.io%2F%25E4%25B8%25AA%25E4%25BA%25BA%25E4%25B8%25BB%25E9%25A1%25B5%25E6%2590%25AD%25E5%25BB%25BA%25E8%25AE%25B0%25E5%25BD%2595%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/" class="pagination--pager" title="MLAPP笔记-高斯模型
+">向前</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">向后</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">留下评论</h4>
+      <section id="disqus_thread"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/" rel="permalink">MLAPP笔记-高斯模型
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" rel="permalink">MLAPP笔记-离散数据生成模型
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/" rel="permalink">MLAPP笔记-概率
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      输入您要搜索的关键词...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <!-- 注释掉页脚的关注
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+-->
+<a href="/sitemap.xml"><i class="fas fa-fw fa-sitemap" aria-hidden="true"></i> Sitemap </a> <a href="/feed.xml"><i class="fas fa-fw fa-rss" aria-hidden="true"></i> RSS </a>
+
+<div class="page__footer-copyright">&copy; 2020 Xikun Huang. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-125987068-1']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://xikunhuang.github.io/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/个人主页搭建记录"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://xikunhuang.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>MLAPP笔记-高斯模型 | Xikun</title>
-<meta name="description" content="简介   本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.   基础   (D)维MVN的pdf为   [(x|,) = ]   上述pdf式中指数里的表达式去掉(-)后实际上就是(x)和()之间的Mahalanobis距离, 关于这个距离更多的知识可以参考Wikipedia.   现在考虑这样一个问题: MVN的pdf的等值线是什么样的呢?    如果协方差矩阵()是对角阵, 那么Mahalanobis距离就变成了    [(x-)T{-1}(x-) = _{i=1}{D}(x_i-i)^2 = {i=1}{D} y_i^2]   其中(_i)是协方差矩阵的对角元素, (y_i = x_i-_i) 在二维情形下这个等值线就是椭圆. (y_1^2 +  y_2^2 = k)    如果协方差不是对角阵, 那么由于它是实对称矩阵, 因此可以正交分解为 (= UU^T) 此时(y_i = u_i^T(x-))    由此也可以看出Mahalanobis距离与欧氏距离的联系.   MLE for an MVN   最大似然估计是估计MVN的参数的方法之一. 但是最大似然估计有过拟合的缺点,后续会讨论MVN参数的Bayes推断, 这种方法可以消除过拟合, 并且可以为估计提供置信度.   定理: 如果(N)个(iid)样本[i(,)], 那么MVN参数的最大似然估计为 [{mle} = _{i=1}^{N}_i = {}] [{mle} = {i=1}{N}(-{})(-{})T]   多元高斯的一个有趣性质   对于给定数据, 我们从数据中可能仅仅能可靠地估计出均值与方差. 这个时候我们需要一个分布能够具有估计出的均值与方差, 同时又尽量做出最少的假设, 多元高斯就是我们需要的分布. 对于给定的均值与方差,多元高斯分布是熵最大的分布   高斯判别分析   多元高斯的一个重要应用是在生成式模型中定义类条件分布, 即 [p(|y=c,)=(|_c,_c)] 这个被成为高斯判别分析.(实际上是生成模型, 名字容易引起误导). 如果(_c)是对角矩阵, 那么就相当于属性条件独立了, 即等价于朴素贝叶斯. 对于新来的数据, 我们根据下式来进行分类 [() = _c[p(y=c|) + p(|y=c,)] ] 其中在计算第二项时, 我们实际上是在计算()与每个类的中心的距离, 只不过是Mahalanobis距离, 这个可以被看成是 nearest centroids classifier.   Quadratic discriminant analysis(QDA)   高斯判别分析分类准则展开之后分类边界是关于()的二次函数, 这个被称为QDA.   Linear discriminant analysis(LDA)   但是如果假定不同类的协方差矩阵相同, 那么这时候分类边界变成了()的线性函数, 这个被称为LDA.   MLE for discriminant analysis   可以利用最大似然估计方法来估计高斯判别分析准则中的参数. [_c = ] [c = {i:y_i=c}i] [ = {i:y_i=c}(_i-_c)(_i-_c)^T]   防止过拟合的方法   MLE虽然简单快速, 但是有过拟合的缺点. 比如当(N_c&lt;D)时, MLE估计出的协方差矩阵是奇异矩阵, 如果真实协方差矩阵是满秩的, 那么就过拟合了. 对此有一些方法来防止过拟合:    假设每个类的协方差矩阵是对角阵, 即假设属性之间条件独立, 这等价于朴素贝叶斯.   假设所有类的协方差矩阵相同, 这等价于LDA.   假设协方差矩阵是对角阵, 且所有类协方差矩阵相同.   使用一般的协方差矩阵, 但是引入先验.   使用MAP估计   将数据映射到低维空间, 然后在低维空间上使用判别分析.    Inference in jointly Gaussian distributions   本小节讨论给定联合分布(p(_1,_2)), 边际分布(p(_1))和条件分布 (p(_1_2)) 是怎样的呢? 如果联合分布是多元高斯分布, 那么边际分布和条件分布仍然是高斯分布. 有如下结论:">
+<meta name="description" content="A personal website.">
 
 
   <meta name="author" content="  黄锡昆">
@@ -20,10 +20,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="Xikun">
 <meta property="og:title" content="MLAPP笔记-高斯模型">
-<meta property="og:url" content="https://xikunhuang.github.io/%E6%8A%80%E6%9C%AF/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/">
+<meta property="og:url" content="https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/">
 
 
-  <meta property="og:description" content="简介   本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.   基础   (D)维MVN的pdf为   [(x|,) = ]   上述pdf式中指数里的表达式去掉(-)后实际上就是(x)和()之间的Mahalanobis距离, 关于这个距离更多的知识可以参考Wikipedia.   现在考虑这样一个问题: MVN的pdf的等值线是什么样的呢?    如果协方差矩阵()是对角阵, 那么Mahalanobis距离就变成了    [(x-)T{-1}(x-) = _{i=1}{D}(x_i-i)^2 = {i=1}{D} y_i^2]   其中(_i)是协方差矩阵的对角元素, (y_i = x_i-_i) 在二维情形下这个等值线就是椭圆. (y_1^2 +  y_2^2 = k)    如果协方差不是对角阵, 那么由于它是实对称矩阵, 因此可以正交分解为 (= UU^T) 此时(y_i = u_i^T(x-))    由此也可以看出Mahalanobis距离与欧氏距离的联系.   MLE for an MVN   最大似然估计是估计MVN的参数的方法之一. 但是最大似然估计有过拟合的缺点,后续会讨论MVN参数的Bayes推断, 这种方法可以消除过拟合, 并且可以为估计提供置信度.   定理: 如果(N)个(iid)样本[i(,)], 那么MVN参数的最大似然估计为 [{mle} = _{i=1}^{N}_i = {}] [{mle} = {i=1}{N}(-{})(-{})T]   多元高斯的一个有趣性质   对于给定数据, 我们从数据中可能仅仅能可靠地估计出均值与方差. 这个时候我们需要一个分布能够具有估计出的均值与方差, 同时又尽量做出最少的假设, 多元高斯就是我们需要的分布. 对于给定的均值与方差,多元高斯分布是熵最大的分布   高斯判别分析   多元高斯的一个重要应用是在生成式模型中定义类条件分布, 即 [p(|y=c,)=(|_c,_c)] 这个被成为高斯判别分析.(实际上是生成模型, 名字容易引起误导). 如果(_c)是对角矩阵, 那么就相当于属性条件独立了, 即等价于朴素贝叶斯. 对于新来的数据, 我们根据下式来进行分类 [() = _c[p(y=c|) + p(|y=c,)] ] 其中在计算第二项时, 我们实际上是在计算()与每个类的中心的距离, 只不过是Mahalanobis距离, 这个可以被看成是 nearest centroids classifier.   Quadratic discriminant analysis(QDA)   高斯判别分析分类准则展开之后分类边界是关于()的二次函数, 这个被称为QDA.   Linear discriminant analysis(LDA)   但是如果假定不同类的协方差矩阵相同, 那么这时候分类边界变成了()的线性函数, 这个被称为LDA.   MLE for discriminant analysis   可以利用最大似然估计方法来估计高斯判别分析准则中的参数. [_c = ] [c = {i:y_i=c}i] [ = {i:y_i=c}(_i-_c)(_i-_c)^T]   防止过拟合的方法   MLE虽然简单快速, 但是有过拟合的缺点. 比如当(N_c&lt;D)时, MLE估计出的协方差矩阵是奇异矩阵, 如果真实协方差矩阵是满秩的, 那么就过拟合了. 对此有一些方法来防止过拟合:    假设每个类的协方差矩阵是对角阵, 即假设属性之间条件独立, 这等价于朴素贝叶斯.   假设所有类的协方差矩阵相同, 这等价于LDA.   假设协方差矩阵是对角阵, 且所有类协方差矩阵相同.   使用一般的协方差矩阵, 但是引入先验.   使用MAP估计   将数据映射到低维空间, 然后在低维空间上使用判别分析.    Inference in jointly Gaussian distributions   本小节讨论给定联合分布(p(_1,_2)), 边际分布(p(_1))和条件分布 (p(_1_2)) 是怎样的呢? 如果联合分布是多元高斯分布, 那么边际分布和条件分布仍然是高斯分布. 有如下结论:">
+  <meta property="og:description" content="A personal website.">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="https://xikunhuang.github.io/%E6%8A%80%E6%9C%AF/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/">
+<link rel="canonical" href="https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/">
 
 
 
@@ -103,7 +103,8 @@
     <!-- start custom head snippets -->
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
-
+<!-- link rel="stylesheet" href="/minimal-mistakes/assets/css/pandoc-tango-syntax-highlight.css" --> 
+<link rel="stylesheet" href="/assets/css/pandoc-zenburn-syntax-highlight.css">
 <!-- end custom head snippets -->
 
   </head>
@@ -172,7 +173,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="MLAPP笔记-高斯模型">
-    <meta itemprop="description" content="简介本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.基础(D)维MVN的pdf为[(x|,) = ]上述pdf式中指数里的表达式去掉(-)后实际上就是(x)和()之间的Mahalanobis距离, 关于这个距离更多的知识可以参考Wikipedia.现在考虑这样一个问题: MVN的pdf的等值线是什么样的呢?如果协方差矩阵()是对角阵, 那么Mahalanobis距离就变成了[(x-)T{-1}(x-) = _{i=1}{D}(x_i-i)^2 = {i=1}{D} y_i^2]其中(_i)是协方差矩阵的对角元素, (y_i = x_i-_i) 在二维情形下这个等值线就是椭圆. (y_1^2 +  y_2^2 = k)如果协方差不是对角阵, 那么由于它是实对称矩阵, 因此可以正交分解为 (= UU^T) 此时(y_i = u_i^T(x-))由此也可以看出Mahalanobis距离与欧氏距离的联系.MLE for an MVN最大似然估计是估计MVN的参数的方法之一. 但是最大似然估计有过拟合的缺点,后续会讨论MVN参数的Bayes推断, 这种方法可以消除过拟合, 并且可以为估计提供置信度.定理: 如果(N)个(iid)样本[i(,)], 那么MVN参数的最大似然估计为 [{mle} = _{i=1}^{N}_i = {}] [{mle} = {i=1}{N}(-{})(-{})T]多元高斯的一个有趣性质对于给定数据, 我们从数据中可能仅仅能可靠地估计出均值与方差. 这个时候我们需要一个分布能够具有估计出的均值与方差, 同时又尽量做出最少的假设, 多元高斯就是我们需要的分布. 对于给定的均值与方差,多元高斯分布是熵最大的分布高斯判别分析多元高斯的一个重要应用是在生成式模型中定义类条件分布, 即 [p(|y=c,)=(|_c,_c)] 这个被成为高斯判别分析.(实际上是生成模型, 名字容易引起误导). 如果(_c)是对角矩阵, 那么就相当于属性条件独立了, 即等价于朴素贝叶斯. 对于新来的数据, 我们根据下式来进行分类 [() = _c[p(y=c|) + p(|y=c,)] ] 其中在计算第二项时, 我们实际上是在计算()与每个类的中心的距离, 只不过是Mahalanobis距离, 这个可以被看成是 nearest centroids classifier.Quadratic discriminant analysis(QDA)高斯判别分析分类准则展开之后分类边界是关于()的二次函数, 这个被称为QDA.Linear discriminant analysis(LDA)但是如果假定不同类的协方差矩阵相同, 那么这时候分类边界变成了()的线性函数, 这个被称为LDA.MLE for discriminant analysis可以利用最大似然估计方法来估计高斯判别分析准则中的参数. [_c = ] [c = {i:y_i=c}i] [ = {i:y_i=c}(_i-_c)(_i-_c)^T]防止过拟合的方法MLE虽然简单快速, 但是有过拟合的缺点. 比如当(N_c&lt;D)时, MLE估计出的协方差矩阵是奇异矩阵, 如果真实协方差矩阵是满秩的, 那么就过拟合了. 对此有一些方法来防止过拟合:假设每个类的协方差矩阵是对角阵, 即假设属性之间条件独立, 这等价于朴素贝叶斯.假设所有类的协方差矩阵相同, 这等价于LDA.假设协方差矩阵是对角阵, 且所有类协方差矩阵相同.使用一般的协方差矩阵, 但是引入先验.使用MAP估计将数据映射到低维空间, 然后在低维空间上使用判别分析.Inference in jointly Gaussian distributions本小节讨论给定联合分布(p(_1,_2)), 边际分布(p(_1))和条件分布 (p(_1_2)) 是怎样的呢? 如果联合分布是多元高斯分布, 那么边际分布和条件分布仍然是高斯分布. 有如下结论:">
+    <meta itemprop="description" content="">
     <meta itemprop="datePublished" content="2019-01-05T00:00:00+00:00">
     
 
@@ -187,7 +188,7 @@
 
       <section class="page__content" itemprop="text">
         
-          <aside class="sidebar__right ">
+          <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 本文目录</h4></header>
               
@@ -195,25 +196,25 @@
 
 
 <ul class="toc__menu">
-<li><a href="#简介">简介</a>
+<li><a href="#简介">1 简介</a>
 <ul>
-<li><a href="#基础">基础</a></li>
-<li><a href="#mle-for-an-mvn">MLE for an MVN</a></li>
-<li><a href="#多元高斯的一个有趣性质">多元高斯的一个有趣性质</a></li>
-<li><a href="#高斯判别分析">高斯判别分析</a>
+<li><a href="#基础">1.1 基础</a></li>
+<li><a href="#mle-for-an-mvn">1.2 MLE for an MVN</a></li>
+<li><a href="#多元高斯的一个有趣性质">1.3 多元高斯的一个有趣性质</a></li>
+<li><a href="#高斯判别分析">1.4 高斯判别分析</a>
 <ul>
-<li><a href="#quadratic-discriminant-analysisqda">Quadratic discriminant analysis(QDA)</a></li>
-<li><a href="#linear-discriminant-analysislda">Linear discriminant analysis(LDA)</a></li>
-<li><a href="#mle-for-discriminant-analysis">MLE for discriminant analysis</a></li>
-<li><a href="#防止过拟合的方法">防止过拟合的方法</a></li>
+<li><a href="#quadratic-discriminant-analysisqda">1.4.1 Quadratic discriminant analysis(QDA)</a></li>
+<li><a href="#linear-discriminant-analysislda">1.4.2 Linear discriminant analysis(LDA)</a></li>
+<li><a href="#mle-for-discriminant-analysis">1.4.3 MLE for discriminant analysis</a></li>
+<li><a href="#防止过拟合的方法">1.4.4 防止过拟合的方法</a></li>
 </ul></li>
-<li><a href="#inference-in-jointly-gaussian-distributions">Inference in jointly Gaussian distributions</a></li>
-<li><a href="#linear-gaussian-systems">Linear Gaussian systems</a></li>
-<li><a href="#inferring-the-parameters-for-an-mvn">Inferring the parameters for an MVN</a>
+<li><a href="#inference-in-jointly-gaussian-distributions">1.5 Inference in jointly Gaussian distributions</a></li>
+<li><a href="#linear-gaussian-systems">1.6 Linear Gaussian systems</a></li>
+<li><a href="#inferring-the-parameters-for-an-mvn">1.7 Inferring the parameters for an MVN</a>
 <ul>
-<li><a href="#知道协方差矩阵-推断均值">知道协方差矩阵, 推断均值</a></li>
-<li><a href="#知道均值-推断协方差矩阵">知道均值, 推断协方差矩阵</a></li>
-<li><a href="#均值与协方差矩阵都未知-同时推断">均值与协方差矩阵都未知, 同时推断</a></li>
+<li><a href="#知道协方差矩阵-推断均值">1.7.1 知道协方差矩阵, 推断均值</a></li>
+<li><a href="#知道均值-推断协方差矩阵">1.7.2 知道均值, 推断协方差矩阵</a></li>
+<li><a href="#均值与协方差矩阵都未知-同时推断">1.7.3 均值与协方差矩阵都未知, 同时推断</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -222,9 +223,9 @@
             </nav>
           </aside>
         
-        <h2 id="简介">简介</h2>
-<p>本章讨论多元高斯或者称多元正态(MVN), 数学要求稍高一些.</p>
-<h3 id="基础">基础</h3>
+        <h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
+<p>本章讨论多元高斯或者称多元正态(MVN).</p>
+<h2 data-number="1.1" id="基础"><span class="header-section-number">1.1</span> 基础</h2>
 <p><span class="math inline">\(D\)</span>维MVN的pdf为</p>
 <p><span class="math display">\[\mathcal{N}(x|\mu,\Sigma) = \frac{1}{(2\pi)^{D/2}|\Sigma|^{1/2}}\exp[-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)]\]</span></p>
 <p>上述pdf式中指数里的表达式去掉<span class="math inline">\(-\frac{1}{2}\)</span>后实际上就是<span class="math inline">\(x\)</span>和<span class="math inline">\(\mu\)</span>之间的<a href="https://en.wikipedia.org/wiki/Mahalanobis_distance">Mahalanobis距离</a>, 关于这个距离更多的知识可以参考Wikipedia.</p>
@@ -238,20 +239,20 @@
 <li>如果协方差不是对角阵, 那么由于它是实对称矩阵, 因此可以正交分解为 <span class="math inline">\(\Sigma = U\Lambda U^T\)</span> 此时<span class="math inline">\(y_i = u_i^T(x-\mu)\)</span></li>
 </ul>
 <p>由此也可以看出Mahalanobis距离与欧氏距离的联系.</p>
-<h3 id="mle-for-an-mvn">MLE for an MVN</h3>
+<h2 data-number="1.2" id="mle-for-an-mvn"><span class="header-section-number">1.2</span> MLE for an MVN</h2>
 <p>最大似然估计是估计MVN的参数的方法之一. 但是最大似然估计有过拟合的缺点,后续会讨论MVN参数的Bayes推断, 这种方法可以消除过拟合, 并且可以为估计提供置信度.</p>
 <p><strong>定理</strong>: 如果<span class="math inline">\(N\)</span>个<span class="math inline">\(iid\)</span>样本<span class="math display">\[\mathbb{x}_i\sim\mathcal{N}(\mu,\Sigma)\]</span>, 那么MVN参数的最大似然估计为 <span class="math display">\[\hat{\mu}_{mle} = \frac{1}{N}\sum_{i=1}^{N}\mathbb{x}_i = \bar{\mathbb{x}}\]</span> <span class="math display">\[\hat{\Sigma}_{mle} = \frac{1}{N}\sum_{i=1}^{N}(\mathbb{x_i}-\bar{\mathbb{x}})(\mathbb{x_i}-\bar{\mathbb{x}})^T\]</span></p>
-<h3 id="多元高斯的一个有趣性质">多元高斯的一个有趣性质</h3>
+<h2 data-number="1.3" id="多元高斯的一个有趣性质"><span class="header-section-number">1.3</span> 多元高斯的一个有趣性质</h2>
 <p>对于给定数据, 我们从数据中可能仅仅能可靠地估计出均值与方差. 这个时候我们需要一个分布能够具有估计出的均值与方差, 同时又尽量做出最少的假设, 多元高斯就是我们需要的分布. <strong>对于给定的均值与方差,多元高斯分布是熵最大的分布</strong></p>
-<h3 id="高斯判别分析">高斯判别分析</h3>
+<h2 data-number="1.4" id="高斯判别分析"><span class="header-section-number">1.4</span> 高斯判别分析</h2>
 <p>多元高斯的一个重要应用是在生成式模型中定义类条件分布, 即 <span class="math display">\[p(\mathbb{x}|y=c,\theta)=\mathcal{N}(\mathbb{x}|\mu_c,\Sigma_c)\]</span> 这个被成为高斯判别分析.(实际上是生成模型, 名字容易引起误导). 如果<span class="math inline">\(\Sigma_c\)</span>是对角矩阵, 那么就相当于属性条件独立了, 即等价于朴素贝叶斯. 对于新来的数据, 我们根据下式来进行分类 <span class="math display">\[\hat{y}(\mathbb{x}) = \arg\max_c[\log p(y=c|\theta) + \log p(\mathbb{x}|y=c,\theta)] \]</span> 其中在计算第二项时, 我们实际上是在计算<span class="math inline">\(\mathbb{x}\)</span>与每个类的中心的距离, 只不过是Mahalanobis距离, 这个可以被看成是 nearest centroids classifier.</p>
-<h4 id="quadratic-discriminant-analysisqda">Quadratic discriminant analysis(QDA)</h4>
+<h3 data-number="1.4.1" id="quadratic-discriminant-analysisqda"><span class="header-section-number">1.4.1</span> Quadratic discriminant analysis(QDA)</h3>
 <p>高斯判别分析分类准则展开之后分类边界是关于<span class="math inline">\(\mathbb{x}\)</span>的二次函数, 这个被称为QDA.</p>
-<h4 id="linear-discriminant-analysislda">Linear discriminant analysis(LDA)</h4>
+<h3 data-number="1.4.2" id="linear-discriminant-analysislda"><span class="header-section-number">1.4.2</span> Linear discriminant analysis(LDA)</h3>
 <p>但是如果假定不同类的协方差矩阵相同, 那么这时候分类边界变成了<span class="math inline">\(\mathbb{x}\)</span>的线性函数, 这个被称为LDA.</p>
-<h4 id="mle-for-discriminant-analysis">MLE for discriminant analysis</h4>
+<h3 data-number="1.4.3" id="mle-for-discriminant-analysis"><span class="header-section-number">1.4.3</span> MLE for discriminant analysis</h3>
 <p>可以利用最大似然估计方法来估计高斯判别分析准则中的参数. <span class="math display">\[\hat{\pi}_c = \frac{N_c}{N}\]</span> <span class="math display">\[\hat{\mu}_c = \frac{1}{N_c}\sum_{i:y_i=c}\mathbb{x}_i\]</span> <span class="math display">\[\hat{\Sigma_c} = \frac{1}{N_c}\sum_{i:y_i=c}(\mathbb{x}_i-\hat{\mu}_c)(\mathbb{x}_i-\hat{\mu}_c)^T\]</span></p>
-<h4 id="防止过拟合的方法">防止过拟合的方法</h4>
+<h3 data-number="1.4.4" id="防止过拟合的方法"><span class="header-section-number">1.4.4</span> 防止过拟合的方法</h3>
 <p>MLE虽然简单快速, 但是有过拟合的缺点. 比如当<span class="math inline">\(N_c&lt;D\)</span>时, MLE估计出的协方差矩阵是奇异矩阵, 如果真实协方差矩阵是满秩的, 那么就过拟合了. 对此有一些方法来防止过拟合:</p>
 <ul>
 <li>假设每个类的协方差矩阵是对角阵, 即假设属性之间条件独立, 这等价于朴素贝叶斯.</li>
@@ -261,7 +262,7 @@
 <li>使用MAP估计</li>
 <li>将数据映射到低维空间, 然后在低维空间上使用判别分析.</li>
 </ul>
-<h3 id="inference-in-jointly-gaussian-distributions">Inference in jointly Gaussian distributions</h3>
+<h2 data-number="1.5" id="inference-in-jointly-gaussian-distributions"><span class="header-section-number">1.5</span> Inference in jointly Gaussian distributions</h2>
 <p>本小节讨论给定联合分布<span class="math inline">\(p(\mathbb{x}_1,\mathbb{x}_2)\)</span>, 边际分布<span class="math inline">\(p(\mathbb{x}_1)\)</span>和条件分布 <span class="math inline">\(p(\mathbb{x}_1\mid\mathbb{x}_2)\)</span> 是怎样的呢? 如果联合分布是多元高斯分布, 那么边际分布和条件分布仍然是高斯分布. 有如下结论:</p>
 <blockquote>
 <p>假设 <span class="math inline">\(\mathbb{x}=(\mathbb{x}_1,\mathbb{x}_2)\)</span> 是多元高斯分布, 参数为 <span class="math display">\[\mu = \left(\begin{matrix} \mu_1 \\ \mu_2 \end{matrix}\right)\]</span> <span class="math display">\[\Sigma = \left(\begin{matrix} \Sigma_{11} &amp; \Sigma_{12} \\ \Sigma_{21} &amp; \Sigma_{22} \end{matrix}\right)\]</span> <span class="math display">\[\Lambda = \Sigma^{-1} = \left(\begin{matrix} \Lambda_{11} &amp; \Lambda_{12} \\ \Lambda_{21} &amp; \Lambda_{22} \end{matrix}\right)\]</span> 那么边际分布为 <span class="math display">\[p(\mathbb{x}_1) = \mathcal{N}(\mathbb{x}_1|\mu_1, \Sigma_{11})\]</span> <span class="math display">\[p(\mathbb{x}_2) = \mathcal{N}(\mathbb{x}_2|\mu_2, \Sigma_{22})\]</span> 条件分布为 <span class="math display">\[p(\mathbb{x}_1|\mathbb{x}_2) = \mathcal{N}(\mathbb{x}_1 | \mu_{1|2}, \Sigma_{1|2})\]</span> 其中 <span class="math display">\[\begin{align}
@@ -271,26 +272,26 @@
 \end{align}\]</span> <span class="math display">\[\Sigma_{1|2} = \Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21} = \Lambda_{11}^{-1}\]</span></p>
 </blockquote>
 <p>上述结论非常重要. 同时注意到上面用到了不同的参数表示形式. 某些情况下用 moment parameters比较方便, 某些情况下用 canonical parameters 比较方便.</p>
-<h3 id="linear-gaussian-systems">Linear Gaussian systems</h3>
+<h2 data-number="1.6" id="linear-gaussian-systems"><span class="header-section-number">1.6</span> Linear Gaussian systems</h2>
 <p>假定有两个变量<span class="math inline">\(\mathbb{x}\)</span>和<span class="math inline">\(\mathbb{y}\)</span>, <span class="math inline">\(\mathbb{x}\in \mathbb{R}^{D_x}\)</span>是隐变量, <span class="math inline">\(\mathbb{y}\in \mathbb{R}^{D_y}\)</span>是 noisy observation of <span class="math inline">\(\mathbb{x}\)</span>. 假定我们有如下先验和似然 <span class="math display">\[p(\mathbb{x}) = \mathcal{N}(\mathbb{x}|\mu_x, \Sigma_x)\]</span> <span class="math display">\[p(\mathbb{y}|\mathbb{x}) = \mathcal{N}(\mathbb{y}|A\mathbb{x} + b, \Sigma_y)\]</span> 这被成为一个线性高斯系统, 现在想要求<span class="math inline">\(\mathbb{x}\)</span>的后验分布<span class="math inline">\(p(\mathbb{x}|\mathbb  {y})\)</span>.</p>
 <p>有如下结论 <span class="math display">\[p(\mathbb{x}|\mathbb{y}) = \mathcal{N}(\mathbb{x}|\mu_{x|y}, \Sigma_{x|y})\]</span> <span class="math display">\[\Sigma_{x|y}^{-1} = \Sigma_{x}^{-1} + A^T\Sigma_{y}^{-1}A\]</span> <span class="math display">\[\mu_{x|y} = \Sigma_{x|y}[A^T\Sigma_{y}^{-1}(\mathbb{y} - b) + \Sigma_{x}^{-1}\mu_{x}]\]</span></p>
 <p>此外 <span class="math display">\[p(\mathbb{y}) = \mathcal{N}(\mathbb{y}|A\mu_x + b, \Sigma_y+A\Sigma_xA^T)\]</span></p>
-<h3 id="inferring-the-parameters-for-an-mvn">Inferring the parameters for an MVN</h3>
+<h2 data-number="1.7" id="inferring-the-parameters-for-an-mvn"><span class="header-section-number">1.7</span> Inferring the parameters for an MVN</h2>
 <p>之前小节提到用最大似然方法估计MVN的参数, 但是具有过拟合的缺点. 这节介绍的是利用贝叶斯方法来推断MVN的参数. 即引入共轭先验分布, 然后计算后验分布, 将后验分布的mode或mean作为参数估计值. 本节考虑了三个情况:</p>
 <ul>
 <li>知道协方差矩阵, 推断均值</li>
 <li>知道均值, 推断协方差矩阵</li>
 <li>均值与协方差矩阵都未知, 同时推断</li>
 </ul>
-<h4 id="知道协方差矩阵-推断均值">知道协方差矩阵, 推断均值</h4>
+<h3 data-number="1.7.1" id="知道协方差矩阵-推断均值"><span class="header-section-number">1.7.1</span> 知道协方差矩阵, 推断均值</h3>
 <blockquote>
 <p>这种情况下共轭先验为高斯分布</p>
 </blockquote>
-<h4 id="知道均值-推断协方差矩阵">知道均值, 推断协方差矩阵</h4>
+<h3 data-number="1.7.2" id="知道均值-推断协方差矩阵"><span class="header-section-number">1.7.2</span> 知道均值, 推断协方差矩阵</h3>
 <blockquote>
 <p>这种情况下共轭先验为 inverse Wishart distribution.</p>
 </blockquote>
-<h4 id="均值与协方差矩阵都未知-同时推断">均值与协方差矩阵都未知, 同时推断</h4>
+<h3 data-number="1.7.3" id="均值与协方差矩阵都未知-同时推断"><span class="header-section-number">1.7.3</span> 均值与协方差矩阵都未知, 同时推断</h3>
 <blockquote>
 <p>这种情况下共轭先验为 Normal-inverse-wishart distribution.</p>
 </blockquote>
@@ -315,7 +316,7 @@
     
       
       
-      <a href="/tags/mlapp" class="page__taxonomy-item" rel="tag">MLAPP</a><span class="sep">, </span>
+      <a href="/tags/mlapp" class="page__taxonomy-item" rel="tag">mlapp</a><span class="sep">, </span>
     
       
       
@@ -340,7 +341,7 @@
     
       
       
-      <a href="/categories/%E6%8A%80%E6%9C%AF" class="page__taxonomy-item" rel="tag">技术</a>
+      <a href="/categories/%E7%AC%94%E8%AE%B0" class="page__taxonomy-item" rel="tag">笔记</a>
     
     </span>
   </p>
@@ -357,22 +358,23 @@
     <h4 class="page__share-title">分享</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B%20https%3A%2F%2Fxikunhuang.github.io%2F%25E6%258A%2580%25E6%259C%25AF%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E9%25AB%2598%25E6%2596%25AF%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B%20https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E9%25AB%2598%25E6%2596%25AF%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxikunhuang.github.io%2F%25E6%258A%2580%25E6%259C%25AF%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E9%25AB%2598%25E6%2596%25AF%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E9%25AB%2598%25E6%2596%25AF%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fxikunhuang.github.io%2F%25E6%258A%2580%25E6%259C%25AF%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E9%25AB%2598%25E6%2596%25AF%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fxikunhuang.github.io%2F%25E7%25AC%2594%25E8%25AE%25B0%2FMLAPP%25E7%25AC%2594%25E8%25AE%25B0-%25E9%25AB%2598%25E6%2596%25AF%25E6%25A8%25A1%25E5%259E%258B%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="分享 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/%E6%8A%80%E6%9C%AF/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" class="pagination--pager" title="MLAPP笔记-离散数据生成模型
+      <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" class="pagination--pager" title="MLAPP笔记-离散数据生成模型
 ">向前</a>
     
     
-      <a href="#" class="pagination--pager disabled">向后</a>
+      <a href="/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" class="pagination--pager" title="个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc
+">向后</a>
     
   </nav>
 
@@ -405,26 +407,13 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/%E6%8A%80%E6%9C%AF/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" rel="permalink">MLAPP笔记-离散数据生成模型
+        <a href="/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="permalink">个人主页搭建记录之GitHub Pages/Actions + Jekyll + Minimal Mistakes + Pandoc
 </a>
       
     </h2>
     
     <p class="archive__item-excerpt" itemprop="description">
-简介
-
-
-先来说一下生成式模型(generative models) 和 判别式模型(discriminative models).
-
-
-对于分类问题, 我们的目标是基于有限的训练样本集尽可能准确地估计出后验概率(p(cx)), 而估计该后验概率有两种方式:
-
-
-
-判别式模型: 直接建模(p(c x)).
-
-
-...</p>
+</p>
   </article>
 </div>
 
@@ -438,27 +427,33 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/%E6%8A%80%E6%9C%AF/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/" rel="permalink">MLAPP笔记-概率
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E7%A6%BB%E6%95%A3%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" rel="permalink">MLAPP笔记-离散数据生成模型
 </a>
       
     </h2>
     
     <p class="archive__item-excerpt" itemprop="description">
-简介
+</p>
+  </article>
+</div>
 
-
-概率两大派:
-
-
-
-频率学派(frequentist)
-
-
-贝叶斯学派(Bayesian)
+        
+          
 
 
 
-频率学派将概率解释为事件在多次实验下发生的频率(long run frequencies of events). 贝叶斯学派用概率来量化我们对一些事情的不确定性, 因此概率本质上与信息有关, 而与实验次数...</p>
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E6%A6%82%E7%8E%87/" rel="permalink">MLAPP笔记-概率
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
   </article>
 </div>
 
@@ -516,7 +511,7 @@
   </ul>
 </div>
 -->
-<a href="/sitemap.xml"><i class="fas fa-fw fa-sitemap" aria-hidden="true"></i> Sitemap </a>
+<a href="/sitemap.xml"><i class="fas fa-fw fa-sitemap" aria-hidden="true"></i> Sitemap </a> <a href="/feed.xml"><i class="fas fa-fw fa-rss" aria-hidden="true"></i> RSS </a>
 
 <div class="page__footer-copyright">&copy; 2020 Xikun Huang. 技术来自于 <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
@@ -557,8 +552,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "https://xikunhuang.github.io/%E6%8A%80%E6%9C%AF/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/%E6%8A%80%E6%9C%AF/MLAPP笔记-高斯模型"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "https://xikunhuang.github.io/%E7%AC%94%E8%AE%B0/MLAPP%E7%AC%94%E8%AE%B0-%E9%AB%98%E6%96%AF%E6%A8%A1%E5%9E%8B/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/%E7%AC%94%E8%AE%B0/MLAPP笔记-高斯模型"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');
@@ -576,36 +571,20 @@
 
 
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { availableFonts: ["TeX"] }
-  });
-</script> 
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  chtml: {
+    scale: 0.8,  // global scaling factor for all expressions
+  }
+};
 </script>
 
-<!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script> -->
-<!-- <script>
-  MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']]
-    }
-  };
-  </script>
-  <script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-  </script> -->
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+</script>
 
 
 
